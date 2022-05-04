@@ -206,7 +206,15 @@ export default function BagPage() {
                     <div className="button-wrapper-cart">
 
                         <button className="button-proceed-payment" onClick={function () {
-                            navigate(`/transaction/2/checkout`)
+
+                            if (productsInTheCart?.length !== 0) {
+                                navigate(`/transaction/checkout`)
+                            }
+
+                            else {
+                                alert("You need to have products in the cart to proceed to checkout")
+                            }
+
                         }}>
 
                                 Proceed to payment

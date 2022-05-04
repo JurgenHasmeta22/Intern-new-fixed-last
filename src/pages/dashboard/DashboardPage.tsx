@@ -109,6 +109,8 @@ const DashboardPage : FC = () => {
         getProductsFromServer()
     }, [])
 
+    useEffect(() => categoriesChange(), [categorySelected])
+
     if (productItem !== null) {
         dispatch(invalidateProductItem()) //when the component gets rendered i remove the productItem from redux state
     }
@@ -141,6 +143,7 @@ const DashboardPage : FC = () => {
     function filterProductsBasedOnCategory(categoryIdArray: number) {
 
         const newProducts: TProduct[] | undefined = [...products]
+        
         newProducts.filter(product => product.categoryId === categoryIdArray)
 
         //@ts-ignore
@@ -148,16 +151,20 @@ const DashboardPage : FC = () => {
 
     }
 
-    // if (categorySelected !== "") {
+    function categoriesChange() {
 
-    //     const newCategories: any = [...categories]
+        if (categorySelected !== "") {
 
-    //     //@ts-ignore
-    //     newCategories.find(category => category.description === categorySelected )
+            const newCategories: any = [...categories]
+    
+            //@ts-ignore
+            newCategories.find(category => category.description === categorySelected )
+    
+            filterProductsBasedOnCategory(newCategories.id)
+    
+        }
 
-    //     filterProductsBasedOnCategory(newCategories.id)
-
-    // }
+    }
 
     // console.log(findingCategoriesNamesForProducts(11))
 

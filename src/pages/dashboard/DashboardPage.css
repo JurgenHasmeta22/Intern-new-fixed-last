@@ -10,6 +10,12 @@
     /* background-color: #004355; */
 }
 
+.cart-icon-header i {
+  font-size: 30px;
+  color: #f8c5a3;
+  cursor: pointer;
+}
+
 .dashboard-wrapper {
   grid-area: dashboard-wrapper;
   display: grid;

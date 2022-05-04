@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/:username/cart" element= {<PrivateRoute><CartPage /></PrivateRoute>} />
         
         <Route path="/profile/:username" element= {<PrivateRoute><UserProfilePage /></PrivateRoute>} />
-        <Route path="/transaction/:id/checkout" element= {<PrivateRoute><CheckoutPage /></PrivateRoute>} />
+        <Route path="/transaction/checkout" element= {<PrivateRoute><CheckoutPage /></PrivateRoute>} />
         
         <Route path="/profile/:username/:tab" element = { <UserProfilePage /> } />
         <Route path="/profile/:username/:tab/page/:pageNumber" element = { <UserProfilePage /> } />

@@ -54,7 +54,7 @@ export default function HeaderCommon(this: any) {
         newCategories.filter(category => category.description === categorySelected)
         // console.log(newCategories)
 
-        filterProductsBasedOnCategory(newCategories.id)
+        // filterProductsBasedOnCategory(newCategories.id)
 
     }
     // #endregion
@@ -189,7 +189,9 @@ export default function HeaderCommon(this: any) {
                   {/* <FontAwesomeIcon icon="fa-solid fa-cart-minus" /> */}
                   
                   <div className="cart-icon-header">
-                    <i className ="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <i className ="fa fa-shopping-cart" aria-hidden="true" onClick={function () {
+                      navigate(`/${user.username}/cart`)
+                    }}></i>
                   </div>
 
             </div>

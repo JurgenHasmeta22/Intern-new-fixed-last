@@ -48,12 +48,20 @@ export default function CheckoutPage() {
 
         // console.log(transactionData)
 
-        let result = await axios.post(`/banktransaction`, transactionData);
-        // console.log(result)
+        if (totalValue !== 0) {
 
-        if (result.status === 200) {
-            // console.log("Your transaction was succesful")
-            alert("Your transaction was succesful")
+            let result = await axios.post(`/banktransaction`, transactionData);
+            // console.log(result)
+
+            if (result.status === 200) {
+                // console.log("Your transaction was succesful")
+                alert("Your transaction was succesful")
+            }
+
+        }
+
+        else {
+            alert("You cant proceed a payment with no total value to pay")
         }
 
     } 
