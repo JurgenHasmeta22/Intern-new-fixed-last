@@ -49,6 +49,11 @@ section.container-profile-menus {
     color: white;
     background-color: #0e0e23;
   }
+
+  .form-transaction {
+      display: grid;
+      grid-auto-flow: row;
+  }
   
   .paginationActive a {
     color: white;

@@ -22,6 +22,8 @@ import { RootState } from '../../main/store/redux/rootState';
 import axios from 'axios';
 import { IBankAccount } from '../../main/store/stores/cart/cart.store';
 import ReactPaginate from 'react-paginate';
+import { setCurrencies } from '../../main/store/stores/dashboard/dashboard.store';
+import ICurrency from '../../main/interfaces/ICurrency';
 // #endregion
 
 
@@ -31,6 +33,7 @@ export default function UserProfilePage({validateUser}:any) {
     // #region "state redux and other react hooks here"
     const transactions: ITransaction[] = useSelector((state: RootState) => state.profile.transactions);
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
+    const currencies: ICurrency[] = useSelector((state: RootState) => state.dashboard.currencies);
 
     const [tab, setTab] = useState<any>("home")
     const [transactionsNumber, setTransactionsNumber] = useState<any>(null)
@@ -95,6 +98,15 @@ export default function UserProfilePage({validateUser}:any) {
     useEffect(() => {
         getBankAccountsFromServer()
     }, [])
+
+    async function getCurrenciesFromServer() {
+        let result = await (await axios.get(`/currency/get-all?PageNumber=1&PageSize=10`)).data;
+        dispatch(setCurrencies(result.data))
+    }
+
+    useEffect(()=> {
+        getCurrenciesFromServer()
+    }, [])
     // #endregion
 
 
@@ -148,6 +160,14 @@ export default function UserProfilePage({validateUser}:any) {
     // #endregion
 
 
+    // #region "Helpers functions"
+    function findingCurrenciesNamesForBankAccounts(currencyId: number) {
+        const bankAccountCurrencyName: any = currencies?.find(currency => currency?.id === currencyId)
+        return bankAccountCurrencyName?.description
+    }
+    // #endregion
+
+
     return (
 
         <main className='main-profile'>
@@ -187,7 +207,7 @@ export default function UserProfilePage({validateUser}:any) {
                             
                                 <h3 className="special-video-you">User Transactions</h3>
                                 
-                                <form id="filter-by-sort">
+                                <form id="filter-by-sort" className='form-transaction'>
 
                                     <label htmlFor="filter-by-type">
                                         <h3>Choose bank account: </h3>
@@ -219,6 +239,8 @@ export default function UserProfilePage({validateUser}:any) {
                                     <label htmlFor="filter-by-type">
                                         <h3>Bank balance: {selectedBankProfile?.balance}</h3>
                                     </label>
+
+                                    <h3>Currency description: {findingCurrenciesNamesForBankAccounts(selectedBankProfile?.currencyId)}</h3>         
                     
                                 </form>
 
