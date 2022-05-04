@@ -1,0 +1,88 @@
+section.container-payment {
+    height: auto;
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+    background-color: rgb(188, 188, 199);
+}
+
+form.form-payment {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+
+    width: 850px;
+    height: 850px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: rgb(255, 174, 53);
+}
+
+.container-form-payment {
+    display: grid;
+    grid-template-rows: 0.2fr 0.2fr 0.2fr 0.2fr 50px;
+    grid-gap: 30px;
+
+    width: 650px;
+    background-color: #fff;
+    height: 750px;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    place-items: center;
+}
+
+.container-form-payment label input {
+    outline: none;
+    border: none;
+    font-size: 18px;
+    padding: 10px 10px;
+}
+
+.container-form-payment label span {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
+.container-form-payment h1 {
+    font-size: 22px;
+    font-weight: 800;
+
+    display: grid;
+    place-self: center;
+    color: rgb(241, 23, 23);
+    border-bottom: 3px solid rgb(17, 16, 16);
+}
+
+.container-form-payment button {
+    padding: 15px 15px;
+    outline: none;
+    border: none;
+    color: rgb(221, 215, 215);
+    background-color: rgb(177, 40, 40);
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    font-weight: 600;
+    width: 60%;
+    display: grid;
+    place-self: center;
+}
+
+.container-form-payment button:hover {
+    color: #000;
+    background-color: rgb(206, 88, 88);
+}
+
+.container-form-payment p {
+    font-size: 16px;
+    color: rgb(52, 50, 182);
+}

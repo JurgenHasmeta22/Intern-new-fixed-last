@@ -1,0 +1,117 @@
+/* Product Detail */
+section.container-product-item {
+    height: auto;
+    width: 100%;
+  
+    display: grid;
+    grid-template: 
+    "header" 100px
+    "main-product" auto
+    "footer" 200px /
+    1fr;
+    grid-gap: 20px;
+  }
+  
+  .button-wish-wrapper {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    place-items: center;
+  }
+  
+  section.container-product-item main.main-container {
+    grid-area: main-product;
+    height: auto;
+    display: grid;
+    grid-template-rows: 40px 0.7fr 0.2fr;
+    grid-gap: 60px;
+    background-color: #f1f1f1;
+    place-items: center;
+  }
+  
+  section.container-product-item .main-container .product-ribbon {
+    padding-top: 150px;
+  }
+  
+  section.container-product-item .main-container .product-ribbon span.ribbon-span {
+    color: #f61f17;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  section.container-product-item .main-container .product-ribbon span {
+    color: black;
+    font-size: 15px;
+  }
+  
+  .product-detail {
+      display: grid;
+      /* margin: 0 auto; */
+      margin-top: 80px;
+      /* padding-top: 100px; */
+      column-gap: 2rem;
+      grid-template-columns: 4fr 6fr;
+      padding: 2rem;
+      /* height: 100%; */
+      background-color: #fff;
+      width: 90%;
+    }
+  
+    .main-wrapper {
+      background-color: #fff;
+    }
+    
+    .product-detail > img {
+      align-self: center;
+    }
+    
+    .product-detail__side {
+      position: relative;
+      display: grid;
+      grid-template-rows: 0.1fr auto;
+      align-content: start;
+      padding-left: 1rem;
+      border-left: 2px solid;
+      grid-gap: 20px;
+    }
+    
+    .product-detail__side h3 {
+      padding-top: 100px;
+      font-size: 36px;
+      color: blue;
+    }
+    
+    .product-detail__side h2 {
+      margin: 1rem 0;
+    }
+    
+    .product-detail__side p {
+      /* max-width: 50%; */
+      /* max-height: 150ch; */
+      width: 50ch;
+      margin-top: 1rem;
+      overflow-y: hidden;
+      text-overflow: ellipsis;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+    }
+  
+    .product-detail__side .special-product-span {
+      color: rgb(230, 90, 90);
+      font-size: 20px;
+      font-style: italic;
+    }
+    
+    .product-detail__side button {
+      max-width: 33%;
+      padding: 1rem;
+      border: 1px solid rgb(219, 34, 34);
+      justify-self: end;
+      margin-top: 2rem;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .product-detail__side button:hover {
+      background-color: rgb(66, 31, 221);
+      color: #fff;
+    }

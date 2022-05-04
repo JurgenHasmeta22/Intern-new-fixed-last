@@ -1,0 +1,171 @@
+/* Basket */
+.bag-menus-wrapper {
+    display: grid;
+    grid-template:
+    "header" 100px
+    "basket-container" auto
+    "footer" 200px;
+    height: auto;
+    grid-gap: 30px;
+  }
+  
+  .basket-container {
+      grid-area: basket-container;
+      width: 50vw;
+      margin: 0 auto;
+      padding-top: 100px;
+      padding-bottom: 50px;
+    }
+    
+    .basket-container > h2 {
+      margin: 2rem 0;
+      font-size: 2.5rem;
+    }
+    
+    .basket-container > ul {
+      border: 1px solid gray;
+      border-radius: 5px;
+      height: 60vh;
+      padding: 2rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      background-color: white;
+    }
+    
+    .basket-container li {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-top: 1px solid gray;
+    }
+    
+    .basket-container li:last-of-type {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid gray;
+    }
+    
+    .basket-container h3 {
+      margin-top: 2rem;
+      margin-right: 2rem;
+      text-align: right;
+    }
+    
+    .basket-container__item select {
+      border: none;
+      padding: 10px 10px;
+      color: #1b1818;
+      background-color: #d65050;
+    }
+  
+    .basket-container__item {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      grid-template-columns: repeat(5, 0.2fr);
+      grid-gap: 15px;
+    }
+  
+    .button-wrapper-cart {
+      display: grid;
+      grid-auto-flow: column;
+      place-items: center;
+      place-content: center;
+      padding-top: 50px;
+    }
+
+    .basket-container__item button {
+      font-size: 16px;
+      color: rgb(15, 14, 14);
+      background-color: rgb(235, 54, 54);
+      padding: 20px 20px;
+      border: none;
+      font-weight: 600;
+      border-radius: 20px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      -ms-border-radius: 20px;
+      -o-border-radius: 20px;
+      cursor: pointer;
+      /* margin-right: 80px; */
+  }
+  
+  .basket-container__item button:hover {
+    transition: 1s;
+    color: rgb(65, 56, 56);
+    background-color: rgb(93, 200, 233);
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -ms-transition: 1s;
+    -o-transition: 1s;
+  }
+
+  #filter-by-sort {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-gap: 20px;
+    place-items: center;
+    place-content: center;
+  }
+
+  .button-clear-cart {
+    padding: 10px 10px;
+    border: none;
+    color: rgb(240, 218, 218);
+    background-color: rgb(214, 87, 28);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin-left: 100px;
+  }
+  
+  .basket-container button.button-proceed-payment {
+    padding: 10px 10px;
+    border: none;
+    color: rgb(240, 218, 218);
+    background-color: rgb(214, 87, 28);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin-left: 200px;
+  }
+  
+  .basket-container button.button-proceed-payment:hover {
+    transition: 1s;
+    color: rgb(65, 56, 56);
+    background-color: rgb(93, 200, 233);
+  }
+  
+  .basket-container__item p {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .basket-container__item span {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .create-account-bank {
+    padding: 15px 20px;
+    border: none;
+    color: rgb(240, 218, 218);
+    background-color: rgb(214, 87, 28);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin-left: 50px;
+  }
