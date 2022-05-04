@@ -6,7 +6,7 @@ import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon"
 import useGetUser from "../../main/hooks/useGetUser"
 import { RootState } from "../../main/store/redux/rootState"
-import { IBankAccount, IBankAccountName } from "../../main/store/stores/cart/cart.store"
+import { IBankAccount, IBankAccountName, invalidateCart } from "../../main/store/stores/cart/cart.store"
 import "./CheckoutPage.css"
 // #endregion
 
@@ -29,6 +29,8 @@ export default function CheckoutPage() {
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts)
     // #endregion
 
+
+    // #region "Helpers functions"
     const handleFormSubmitPayment = async (e:any) => {
 
         e.preventDefault()
@@ -48,23 +50,25 @@ export default function CheckoutPage() {
 
         // console.log(transactionData)
 
-        if (totalValue !== 0) {
+        if (totalValue !== 0 && selectedBankAccount?.balance > totalValue) {
 
             let result = await axios.post(`/banktransaction`, transactionData);
             // console.log(result)
 
             if (result.status === 200) {
-                // console.log("Your transaction was succesful")
-                alert("Your transaction was succesful")
+                dispatch(invalidateCart())
+                alert("Your transaction was successfull")
             }
 
         }
 
         else {
-            alert("You cant proceed a payment with no total value to pay")
+            alert("You cant proceed for a payment with no total value to pay")
         }
 
     } 
+    // #endregion
+
 
     return (
 

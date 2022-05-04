@@ -20,6 +20,12 @@ place-items: center;
 padding-left: 50px;
 }
 
+#total-header-span {
+  color: #e68b5d;
+  font-size: 16px;
+  font-weight: 900;
+}
+
 header.header .header-group-1 a {
 font-size: 22px;
 letter-spacing: 1px;

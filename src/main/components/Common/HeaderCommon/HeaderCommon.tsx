@@ -16,6 +16,7 @@ import {
     setProducts
 } from "../../../store/stores/dashboard/dashboard.store"
 import { TProduct } from "../../../interfaces/TProduct";
+import { ICartProduct } from "../../../store/stores/cart/cart.store";
 // #endregion
 
 
@@ -31,6 +32,8 @@ export default function HeaderCommon(this: any) {
     // #region "For the moment broken features"
     const products: TProduct[] | undefined = useSelector((state: RootState) => state.dashboard.products);
     
+    const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
+
     // @ts-ignore
     const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
 
@@ -55,6 +58,18 @@ export default function HeaderCommon(this: any) {
         // console.log(newCategories)
 
         // filterProductsBasedOnCategory(newCategories.id)
+
+    }
+
+    function calculateSpanTotalCart() {
+
+        let number = 0
+
+        for (const productCart of productsInTheCart) {
+            number += Number(productCart.quantity)
+        }
+
+        return number
 
     }
     // #endregion
@@ -95,19 +110,19 @@ export default function HeaderCommon(this: any) {
 
                             <ul>
                                 
-                                {
-                                    //@ts-ignore
-                                    categories.map(category => 
+                              {
+                                //@ts-ignore
+                                categories.map(category => 
 
-                                        <li className = "special-list-drop" key={category.id} onClick={function (e: any) {
-                                            e.stopPropagation()
-                                            dispatch(setCategorySelected(category.description))
-                                            handleCategoryRender()
-                                        }}>{category.description}</li>
+                                    <li className = "special-list-drop" key={category.id} onClick={function (e: any) {
+                                        e.stopPropagation()
+                                        dispatch(setCategorySelected(category.description))
+                                        handleCategoryRender()
+                                    }}>{category.description}</li>
 
-                                    )
+                                )
 
-                                }
+                              }
 
                             </ul>
 
@@ -128,7 +143,7 @@ export default function HeaderCommon(this: any) {
                 }}>
 
                     <input type="search" name="searchMovie"  placeholder="Search for Products..." aria-label="Search through site content" 
-                    onChange={function (e) {  
+                        onChange={function (e) {  
                     }}/>
 
                     <button type="submit">
@@ -189,9 +204,14 @@ export default function HeaderCommon(this: any) {
                   {/* <FontAwesomeIcon icon="fa-solid fa-cart-minus" /> */}
                   
                   <div className="cart-icon-header">
-                    <i className ="fa fa-shopping-cart" aria-hidden="true" onClick={function () {
+
+                    <i className ="fa fa-shopping-cart" aria-hidden="true" 
+                    onClick={function () {
                       navigate(`/${user.username}/cart`)
                     }}></i>
+
+                    <span id="total-header-span">{calculateSpanTotalCart()}</span>
+
                   </div>
 
             </div>

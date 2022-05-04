@@ -89,7 +89,7 @@ export default function BagPage() {
 
                 <section className="basket-container">
 
-                    <form id="filter-by-sort">
+                    <form id="filter-by-sort" className="form-cart">
 
                         <label htmlFor="filter-by-type">
                             <h3>Choose bank account: </h3>
@@ -117,6 +117,10 @@ export default function BagPage() {
                             }
 
                         </select>
+
+                        <div className="bankAccount-balance">
+                            <span>Total balance of bank account: <strong>{selectedBankAccount?.balance}</strong></span>
+                        </div>
                     
                     </form>
 
@@ -201,18 +205,20 @@ export default function BagPage() {
 
                     </ul>
 
-                    <h3>Your total: {totalValue}</h3>
+                    <div className="total-wrapper">
+                        <h3 className="total-cart">Your total: {totalValue}</h3>
+                    </div>
 
                     <div className="button-wrapper-cart">
 
                         <button className="button-proceed-payment" onClick={function () {
 
-                            if (productsInTheCart?.length !== 0) {
+                            if (productsInTheCart?.length !== 0 && (selectedBankAccount?.balance > totalValue) ) {
                                 navigate(`/transaction/checkout`)
                             }
 
                             else {
-                                alert("You need to have products in the cart to proceed to checkout")
+                                alert("You need to have products in the cart to proceed to checkout, or your bank account is not sufficent to proceed to payment")
                             }
 
                         }}>
