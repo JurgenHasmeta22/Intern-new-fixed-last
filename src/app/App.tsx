@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/dashboard" element={<PrivateRoute><DashboardPage/></PrivateRoute>} />
 
         <Route path="/login" element={<PrivateRoute isPageLogin><LoginPage /></PrivateRoute>} />        
-        <Route path="/register" element= {<PrivateRoute><RegisterPage /></PrivateRoute>} />
+        <Route path="/register" element= {<PrivateRoute isPageLogin><RegisterPage /></PrivateRoute>} />
 
         <Route path="/products/:id" element= {<PrivateRoute><ProductItemPage /></PrivateRoute>} />
 
@@ -42,7 +42,7 @@ const App = () => {
         
         <Route path="/profile/:username/:tab" element = { <UserProfilePage /> } />
         <Route path="/profile/:username/:tab/page/:pageNumber" element = { <UserProfilePage /> } />
-        \
+        
         <Route path="/createBankAccount" element= {<PrivateRoute><CreateBankAccountPage /></PrivateRoute>} />
 
       </Routes>

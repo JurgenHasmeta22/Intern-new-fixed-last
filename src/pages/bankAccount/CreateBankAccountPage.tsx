@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
@@ -10,6 +11,26 @@ export default function CreateBankAccountPage() {
     const [currencyId, setCurrencyId] = useState<any>("")
     const [balance, setBalance] = useState<any>("")
 
+    async function handleSubmitForm(e: any) {
+        
+        e.preventDefault()
+
+        const bankData = {
+            "code": code,
+            "name": name,
+            "currencyId": currencyId,
+            "balance": balance
+        }
+
+        let result = await axios.post(`/bankaccount`, bankData);
+        // console.log(result)
+
+        if (result.status === 200) {
+            alert("Your bank account creation was succesful")
+        }
+
+    }
+    
     return (
 
         <div className="bankAccount-page-wrapper">
@@ -18,7 +39,9 @@ export default function CreateBankAccountPage() {
 
             <div className="bankAccount-wrapper">
 
-                <form className="form-wrapper">
+                <form className="form-wrapper" onSubmit={function (e) { 
+                    handleSubmitForm(e) 
+                }}>
 
                     <div className="create-wrapper-account">
 
@@ -67,6 +90,10 @@ export default function CreateBankAccountPage() {
                         }} />
 
                     </div>
+
+                    <button type="submit">
+                        Create bank account
+                    </button>
                     
 
                 </form>
