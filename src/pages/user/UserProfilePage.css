@@ -56,7 +56,9 @@ section.container-profile-menus {
 
   .form-transaction {
       display: grid;
-      grid-auto-flow: row;
+      grid-auto-flow: column;
+      place-items: center;
+      padding: 50px 0;
   }
   
   .paginationActive a {
@@ -224,6 +226,16 @@ section.container-profile-menus .profile-info {
     padding-top: 30px;
 }
 
+.container-void {
+    height: 300px;
+    display: grid;
+    place-content: center;
+}
+
+.container-void span {
+    font-size: 16px;
+    font-weight: 700;
+}
 .container-videos .image-post {
     height: 150px;
     width: 260px;
@@ -233,6 +245,7 @@ section.container-profile-menus .profile-info {
 .container-about {
     display: grid;
     place-items: center;
+    height: 300px;
 }
 
 .container-about span {

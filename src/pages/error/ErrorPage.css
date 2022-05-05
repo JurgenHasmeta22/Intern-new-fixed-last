@@ -4,3 +4,8 @@
     display: grid;
     place-items: center;
 }
+
+.error span {
+    font-size: 16px;
+    font-weight: 700;
+}

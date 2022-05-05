@@ -244,6 +244,7 @@ export default function UserProfilePage({validateUser}:any) {
     const rows = [...newArray]
     // #endregion
 
+
     return (
 
         <main className='main-profile'>
@@ -254,7 +255,7 @@ export default function UserProfilePage({validateUser}:any) {
 
                 <div className="container-profile-nav">
 
-                    <div className="profile-info">]
+                    <div className="profile-info">
                         <img src="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png" />
                         <span className="userName-span">{user?.username}</span>
                     </div>
@@ -386,7 +387,13 @@ export default function UserProfilePage({validateUser}:any) {
                                 <span>My phone number is: {user?.phone}</span>
                             </div>
 
-                        ): null
+                        ): (
+
+                            <div className="container-void">
+                                <span>Click in the tabs and select a bank to see transactions {user?.username}</span>
+                            </div>
+
+                        )
 
                     }
 
