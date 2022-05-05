@@ -17,6 +17,7 @@ import { useEffect, useRef } from "react"
 export default function CheckoutPage() {
 
     
+    // #region "Toast and some timeout stuff"
     const notify = () => toast.success("Payment was succesfully done!");
     const timerRef = useRef(null);
 
@@ -24,6 +25,8 @@ export default function CheckoutPage() {
         // Clear the interval when the component unmounts
         return () => clearTimeout(timerRef.current); 
     }, [])
+    // #endregion
+
 
     // #region "React hooks"
     const user = useGetUser()

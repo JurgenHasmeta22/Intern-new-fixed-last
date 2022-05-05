@@ -22,14 +22,19 @@ import { ICartProduct } from "../../../store/stores/cart/cart.store";
 
 export default function HeaderCommon(this: any) {
     
+
+    // #region "React hooks"
     const user = useGetUser()
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    // #endregion
+
+
+    // #region "Redux state getting"
 
     //@ts-ignore
     const categories: ICategory[] | undefined = useSelector((state: RootState) => state.dashboard.categories);
     
-    // #region "For the moment broken features"
     const products: TProduct[] | undefined = useSelector((state: RootState) => state.dashboard.products);
     
     const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
@@ -37,6 +42,10 @@ export default function HeaderCommon(this: any) {
     // @ts-ignore
     const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
 
+    // #endregion
+
+
+    // #region "Helpers functions"
     function filterProductsBasedOnCategory(categoryIdArray: number) {
 
         const newProducts: TProduct[] | undefined = [...products]
@@ -100,8 +109,6 @@ export default function HeaderCommon(this: any) {
                             <img src="/assets/logos/list_blu.png" alt="" />
                             
                             <li className="special-uppercase" onClick={function (e) {
-                                // e.stopPropagation()
-                                // navigate("../genres")
                             }}>Categories</li>
 
                         </div>
@@ -200,9 +207,6 @@ export default function HeaderCommon(this: any) {
 
                     )}
 
-                  {/* @ts-ignore */}
-                  {/* <FontAwesomeIcon icon="fa-solid fa-cart-minus" /> */}
-                  
                   <div className="cart-icon-header">
 
                     <i className ="fa fa-shopping-cart" aria-hidden="true" 

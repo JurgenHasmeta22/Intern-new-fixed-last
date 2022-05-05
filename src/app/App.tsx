@@ -1,3 +1,4 @@
+// #region "Importing stuff"
 import AppNavigate from './AppNavigate'
 import PrivateRoute from './private-route';
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
@@ -13,6 +14,7 @@ import CheckoutPage from "../pages/checkout/CheckoutPage"
 import CreateBankAccountPage from "../pages/bankAccount/CreateBankAccountPage"
 
 import "../app/App.css"
+// #endregion
 
 const App = () => {
 

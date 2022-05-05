@@ -24,6 +24,8 @@ import { IBankAccount } from '../../main/store/stores/cart/cart.store';
 import ReactPaginate from 'react-paginate';
 import { setCurrencies } from '../../main/store/stores/dashboard/dashboard.store';
 import ICurrency from '../../main/interfaces/ICurrency';
+
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 // #endregion
 
 
@@ -168,6 +170,80 @@ export default function UserProfilePage({validateUser}:any) {
     // #endregion
 
 
+    // #region "Material UI data grid"
+    const columns: GridColDef[] = [
+
+        { field: 'id', headerName: 'Id', width: 90 },
+      
+        {
+          field: 'bankAccountId',
+          headerName: 'Bank Account Id',
+          width: 220,
+          editable: false,
+        },
+      
+        {
+          field: 'bankName',
+          headerName: 'Bank Account Name',
+          width: 220,
+          editable: true,
+        },
+      
+        {
+          field: 'action',
+          headerName: 'Bank Action',
+          width: 220,
+          editable: false,
+        },
+      
+        {
+          field: 'amount',
+          headerName: 'Bank Amount',
+          editable: false,
+          width: 220
+        },
+
+        {
+            field: 'description',
+            headerName: 'Bank Description',
+            editable: false,
+            width: 220
+        },
+
+        {
+            field: 'isActive',
+            headerName: 'Bank is active',
+            editable: false,
+            width: 220
+        },
+
+        {
+            field: 'dateCreated',
+            headerName: 'Bank Date Created',
+            editable: false,
+            width: 400
+        }
+      
+    ];
+      
+    const rowsOld = [...transactions]
+
+    let newArray = []
+
+    for (const element of rowsOld) {
+
+        const newObject = {
+            ...element,
+            bankName: selectedBankProfile?.name
+        }
+
+        newArray.push(newObject)
+
+    }
+
+    const rows = [...newArray]
+    // #endregion
+
     return (
 
         <main className='main-profile'>
@@ -282,6 +358,18 @@ export default function UserProfilePage({validateUser}:any) {
                                         disabledClassName={"paginationDisabled"}
                                         activeClassName={"paginationActive"}
                                     />
+
+                                    <div className='data-grid-wrapper'>
+                                        <DataGrid
+                                            rows={rows}
+                                            columns={columns}
+                                            pageSize={5}
+                                            rowsPerPageOptions={[5]}
+                                            checkboxSelection
+                                            disableSelectionOnClick
+                                            className='data-grid'
+                                        />
+                                    </div>
 
                                 </div>
 

@@ -108,8 +108,19 @@ section.container-profile-menus .profile-info {
 
 .container-transactions {
     height: auto;
-    /* display: grid;
-    margin-bottom: 100px; */
+    display: grid;
+    grid-template-rows: 0.5fr 0.1fr 0.4fr;
+    grid-gap: 50px;
+    margin-bottom: 150px;
+}
+
+.data-grid-wrapper {
+    height: 500px;
+    width: 100%;
+}
+
+.data-grid {
+    margin-top: 100px;
 }
 
 .container-tabs {

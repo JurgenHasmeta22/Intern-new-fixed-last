@@ -100,3 +100,61 @@
     transform: translate(-3px);
     transition: 0.3s;
   }
+
+  .wrapper {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.login {
+    display: grid;
+    display: block;
+    width: 300px;
+    height: 280px;
+    box-shadow: 0 0 0.75rem #0095c7da;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.login h1 {
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.button_container {
+    display: grid;
+    gap: 1rem;
+}
+
+.button__login {
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    height: 25px;
+    border: 1px;
+    background: #146dac;
+}
+
+.labelBlock {
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.input {
+    padding: 0.5rem;
+    border-radius: 10px;
+    height: 25px;
+    border: 0.1px solid rgb(168, 165, 165);
+}

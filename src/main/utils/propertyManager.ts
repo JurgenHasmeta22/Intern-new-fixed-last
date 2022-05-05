@@ -63,6 +63,7 @@ class PropertyManager {
     if (postDot > 0 && postDot < propertyName.length - 1) {
 
       const propFirstBlock = propertyName.substring(0, postDot);
+      
       const propSecondBlock = propertyName.substring(
         postDot + 1,
         propertyName.length
