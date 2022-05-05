@@ -239,6 +239,9 @@ const RegisterPage : FC = ()=> {
                                         id="firstName"
                                         label="First Name"
                                         autoFocus
+                                        onChange={(e: any) => {
+                                            dispatch(setFirstName(e.target.value))
+                                        }}
                                     />
 
                                 </Grid>
@@ -251,6 +254,9 @@ const RegisterPage : FC = ()=> {
                                         label="Last Name"
                                         name="lastName"
                                         autoComplete="family-name"
+                                        onChange={(e: any) => {
+                                            dispatch(setLastName(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
@@ -262,6 +268,9 @@ const RegisterPage : FC = ()=> {
                                         label="Email Address"
                                         name="email"
                                         autoComplete="email"
+                                        onChange={(e: any) => {
+                                            dispatch(setEmailRegister(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
@@ -273,6 +282,9 @@ const RegisterPage : FC = ()=> {
                                         label="birthdate"
                                         name="birthdate"
                                         autoComplete="birthdate"
+                                        onChange={(e: any) => {
+                                            dispatch(setBirthDate(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
@@ -284,6 +296,9 @@ const RegisterPage : FC = ()=> {
                                         label="phone"
                                         name="phone"
                                         autoComplete="phone"
+                                        onChange={(e: any) => {
+                                            dispatch(setPhoneNumber(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
@@ -295,6 +310,9 @@ const RegisterPage : FC = ()=> {
                                         label="username"
                                         name="username"
                                         autoComplete="username"
+                                        onChange={(e: any) => {
+                                            dispatch(setUserNameRegister(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
@@ -307,6 +325,9 @@ const RegisterPage : FC = ()=> {
                                         type="password"
                                         id="password"
                                         autoComplete="new-password"
+                                        onChange={(e: any) => {
+                                            dispatch(setPasswordRegister(e.target.value))
+                                        }}
                                     />
                                 </Grid>
 
