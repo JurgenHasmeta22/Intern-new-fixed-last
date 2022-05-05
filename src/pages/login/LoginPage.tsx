@@ -1,3 +1,4 @@
+// #region "Importing stuff"
 import { FC, useEffect } from "react"
 // import { useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from "react-toastify";
+// #endregion
 
 const LoginPage : FC = ()=>{
 
@@ -30,9 +32,12 @@ const LoginPage : FC = ()=>{
     const dispatch = useDispatch();
     // #endregion
 
+    // #region "Redux state"
     const userName = useSelector((state: RootState) => state.login.userName);
     const password = useSelector((state: RootState) => state.login.password);
+    // #endregion
 
+    // #region "Event listeners"
     function handleSubmit(e: any) {
                             
         e.preventDefault()
@@ -46,13 +51,15 @@ const LoginPage : FC = ()=>{
         // navigate("../dashboard");
 
     }
+    // #endregion
 
+    // #region "Helpers and other stuff"
     const notify = () => toast.success("Welcome")
-
+    // #endregion
 
     return (
 
-        <>
+        <div className="login-wrapper-upper">
 
             {
                 // #region "Old Login"
@@ -146,10 +153,11 @@ const LoginPage : FC = ()=>{
 
                     <Box
                         sx={{
-                            marginTop: 8,
+                            marginTop: 30,
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center',
+                            placeItems: 'center',
+                            placeContent: 'center'
                         }}
                     >
 
@@ -214,9 +222,11 @@ const LoginPage : FC = ()=>{
                             <Grid container>
 
                                 <Grid item>
+                                    
                                     <Link href="" variant="body2" onClick={() => { navigate("/register") }}>
                                         {"Don't have an account? Sign Up"}
                                     </Link>
+
                                 </Grid>
 
                             </Grid>
@@ -229,7 +239,7 @@ const LoginPage : FC = ()=>{
 
             </ThemeProvider>
             
-        </>
+        </div>
 
     )
     

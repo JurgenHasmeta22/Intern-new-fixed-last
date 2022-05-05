@@ -16,7 +16,8 @@ import {
     setProductItem,
     invalidateProductItem,
     setCategories,
-    invalidateCategories
+    invalidateCategories,
+    setProductsFiltered
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../main/interfaces/TProduct";
@@ -88,13 +89,17 @@ const DashboardPage : FC = () => {
 
     // #region "Products state and fetching etc with axios"
     const products: TProduct[] = useSelector((state: RootState) => state.dashboard.products);
-    
+
+    //@ts-ignore
+    const productsFiltered: TProduct[] = useSelector((state: RootState) => state.dashboard.productsFiltered);
+
     //@ts-ignore
     const productItem: TProduct = useSelector((state: RootState) => state.dashboard.productItem);
 
     async function getProductsFromServer() {
         let result = await (await axios.get(`/product/get-all?PageNumber=1&PageSize=10`)).data;
         dispatch(setProducts(result.data))
+        dispatch(setProductsFiltered(result.data))
     }
 
     async function getCategoriesFromServer() {
@@ -117,11 +122,7 @@ const DashboardPage : FC = () => {
         getProductsFromServer()
     }, [])
 
-    useEffect(() => categoriesChange(), [categorySelected])
-
-    // if (productItem !== null) {
-    //     dispatch(invalidateProductItem()) //when the component gets rendered i remove the productItem from redux state
-    // }
+    // useEffect(() => categoriesChange(), [categorySelected])
 
     // #endregion
 
@@ -148,33 +149,31 @@ const DashboardPage : FC = () => {
         return productCategoryName.description
     }
 
-    function filterProductsBasedOnCategory(categoryIdArray: number) {
+    // function filterProductsBasedOnCategory(categoryIdArray: number) {
 
-        const newProducts: TProduct[] | undefined = [...products]
+    //     const newProducts: TProduct[] | undefined = [...products]
         
-        newProducts.filter(product => product.categoryId === categoryIdArray)
+    //     newProducts.filter(product => product.categoryId === categoryIdArray)
 
-        //@ts-ignore
-        dispatch(setProducts(newProducts))
+    //     //@ts-ignore
+    //     dispatch(setProductsFiltered(newProducts))
 
-    }
+    // }
 
-    function categoriesChange() {
+    // function categoriesChange() {
 
-        if (categorySelected !== "") {
+    //     if (categorySelected !== "") {
 
-            const newCategories: any = [...categories]
+    //         const newCategories: any = [...categories]
     
-            //@ts-ignore
-            newCategories.find(category => category.description === categorySelected )
+    //         //@ts-ignore
+    //         newCategories.find(category => category.description === categorySelected )
     
-            filterProductsBasedOnCategory(newCategories.id)
+    //         filterProductsBasedOnCategory(newCategories.id)
     
-        }
+    //     }
 
-    }
-
-    // console.log(findingCategoriesNamesForProducts(11))
+    // }
 
     // #endregion
 
@@ -192,22 +191,22 @@ const DashboardPage : FC = () => {
                     { 
                     
                         // @ts-ignore
-                        products.map(product => 
+                        productsFiltered.map(product => 
 
-                            <div className="product-item" key = {product.id} onClick={() => {
-                                navigate(`/products/${product.id}`)
+                            <div className="product-item" key = {product?.id} onClick={() => {
+                                navigate(`/products/${product?.id}`)
                             }}>
 
                                 <img
-                                    src={`data:image/jpeg;base64,${product.base64Image}`}
-                                    alt={`${product.name}`}
+                                    src={`data:image/jpeg;base64,${product?.base64Image}`}
+                                    alt={`${product?.name}`}
                                 />
 
-                                <span><strong>Product Name: </strong> {product.name}</span>
-                                <p><strong>Product Short Desc: </strong> {product.shortDescription}</p>
-                                <span><strong>Product Price: </strong> {product.price}$</span>
-                                <span><strong>Product Category Id: </strong> {product.categoryId}</span>
-                                <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product.categoryId)}</span>        
+                                <span><strong>Product Name: </strong> {product?.name}</span>
+                                <p><strong>Product Short Desc: </strong> {product?.shortDescription}</p>
+                                <span><strong>Product Price: </strong> {product?.price}$</span>
+                                <span><strong>Product Category Id: </strong> {product?.categoryId}</span>
+                                <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product?.categoryId)}</span>        
 
                             </div>
                         

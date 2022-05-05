@@ -21,6 +21,7 @@
   display: grid;
   grid-auto-flow: column;
   place-items: center;
+  height: auto;
   /* place-content: center; */
 }
 
@@ -61,6 +62,7 @@
   place-items: center;
   /* place-content: center; */
   padding-bottom: 50px;
+  height: auto;
 }
 
 .product-item img {

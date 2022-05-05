@@ -9,6 +9,9 @@ const initialState: IDashboard = {
   products: [],
 
   //@ts-ignore
+  productsFiltered: [],
+
+  //@ts-ignore
   productItem: null,
 
   //@ts-ignore
@@ -31,6 +34,11 @@ const dashboardStore = createSlice({
 
     setProducts(state, action: PayloadAction<[]>) {
       state.products = action.payload
+    },
+
+    setProductsFiltered(state, action: PayloadAction<[]>) {
+      //@ts-ignore
+      state.productsFiltered = action.payload
     },
 
     invalidateProducts(state) {
@@ -75,6 +83,11 @@ const dashboardStore = createSlice({
     invalidateCategorySelected(state) {
       //@ts-ignore
       state.currencies = action.payload
+    },
+
+    invalidateProductsFiltered(state) {
+      //@ts-ignore
+      state.productsFiltered = action.payload
     }
 
   }
@@ -93,5 +106,7 @@ export const {
   setCurrencies,
   invalidateCurrencies,
   setCategorySelected,
-  invalidateCategorySelected
+  invalidateCategorySelected,
+  setProductsFiltered,
+  invalidateProductsFiltered
 } = dashboardStore.actions;

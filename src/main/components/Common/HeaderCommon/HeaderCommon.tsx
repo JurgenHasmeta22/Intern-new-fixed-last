@@ -13,8 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     setCategorySelected,
     invalidateCategorySelected,
-    setProducts
+    setProducts,
+    setProductsFiltered
 } from "../../../store/stores/dashboard/dashboard.store"
+
 import { TProduct } from "../../../interfaces/TProduct";
 import { ICartProduct } from "../../../store/stores/cart/cart.store";
 // #endregion
@@ -50,23 +52,27 @@ export default function HeaderCommon(this: any) {
 
         const newProducts: TProduct[] | undefined = [...products]
         
-        newProducts.filter(product => product.categoryId === categoryIdArray)
-        // console.log(newProducts)
+        const finalProducts = newProducts.filter(product => product.categoryId === categoryIdArray)
+        
+        // console.log(finalProducts)
 
         //@ts-ignore
-        dispatch(setProducts(newProducts))
+        dispatch(setProductsFiltered(finalProducts))
 
     }
     
-    function handleCategoryRender() {
+    function handleCategoryRender(category: any) {
+
+        dispatch(setCategorySelected(category?.description))
 
         const newCategories: any = [...categories]
 
         //@ts-ignore
-        newCategories.filter(category => category.description === categorySelected)
-        // console.log(newCategories)
+        const categoryFound = newCategories.find(category => category.description === categorySelected)
+        
+        // console.log(categoryFound)
 
-        // filterProductsBasedOnCategory(newCategories.id)
+        filterProductsBasedOnCategory(categoryFound?.id)
 
     }
 
@@ -117,14 +123,22 @@ export default function HeaderCommon(this: any) {
 
                             <ul>
                                 
+                              <li onClick={() => {
+                                  //@ts-ignore
+                                  dispatch(setProductsFiltered(products))
+                              }}>
+                                  Show All
+                              </li>
+
                               {
+                                
                                 //@ts-ignore
                                 categories.map(category => 
 
-                                    <li className = "special-list-drop" key={category.id} onClick={function (e: any) {
-                                        e.stopPropagation()
-                                        dispatch(setCategorySelected(category.description))
-                                        handleCategoryRender()
+                                    <li className = "special-list-drop" key={category?.id} onClick={function (e: any) {
+                                        // e.stopPropagation()
+                                        // dispatch(setCategorySelected(category?.description))
+                                        handleCategoryRender(category)
                                     }}>{category.description}</li>
 
                                 )

@@ -146,6 +146,12 @@
     background: #146dac;
 }
 
+.login-wrapper-upper {
+  display: grid;
+  place-items: center;
+  place-content: center;
+}
+
 .labelBlock {
     display: block;
     text-align: center;
