@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./CreateBankAccountPage.css"
 
 export default function CreateBankAccountPage() {
@@ -23,10 +25,9 @@ export default function CreateBankAccountPage() {
         }
 
         let result = await axios.post(`/bankaccount`, bankData);
-        // console.log(result)
 
         if (result.status === 200) {
-            alert("Your bank account creation was succesful")
+            toast.success("Bank account was created successfully!")
         }
 
     }

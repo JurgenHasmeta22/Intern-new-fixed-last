@@ -15,7 +15,7 @@ initApp().then((appStore: any) => {
       <Provider store={appStore}>
         
         <ToastContainer
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -24,6 +24,7 @@ initApp().then((appStore: any) => {
           draggable
           pauseOnHover
         />
+        
         <App />
 
       </Provider>

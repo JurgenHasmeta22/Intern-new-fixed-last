@@ -10,6 +10,10 @@ section.container-profile-menus {
     padding-bottom: 50px;
 }
 
+/* select {
+    padding: 10px 10px;
+} */
+
 .main-profile {
     display: grid;
     grid-template: 

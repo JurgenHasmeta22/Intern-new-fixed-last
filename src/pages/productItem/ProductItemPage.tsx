@@ -61,15 +61,16 @@ export default function ProductItemPage() {
         dispatch(setProductItem(result.data))
     }
 
+    //@ts-ignore
     useEffect(()=> {
         getProductItemFromServer()
+        return () => dispatch(invalidateProductItem()); 
     }, [params.id])
 
     // #endregion
 
 
     // #region "Checking if product came and loading if it still loading the res from server"
-
     if (productItem?.name === null && productItem === null || productItem?.name === undefined) {
 
         return (
@@ -79,13 +80,11 @@ export default function ProductItemPage() {
         )    
     
     }
-
     // #endregion
     
 
     // #region "Filtering categories and doing join in front end to replace categoryId"
     const productCategoryName: any = categories.find(category => category.id === productItem.categoryId)
-    // console.log(productCategoryName)
     // #endregion
 
     
@@ -157,9 +156,7 @@ export default function ProductItemPage() {
 
                                 <select name="quantity-select" id="quantity-select" 
                                 onChange={function (e: any) {
-                                    // const quantityFromSelect = Number(e.target.value)
                                     setSelectQuantity(e.target.value)
-                                    // dispatch(changeProductQuantity({ productId: productItem?.id, quantity: quantityFromSelect }))
                                 }}>
                                      
                                     <option value="1">1</option>

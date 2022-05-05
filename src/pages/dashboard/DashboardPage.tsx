@@ -20,6 +20,7 @@ import {
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../main/interfaces/TProduct";
+import { toast } from "react-toastify";
 // #endregion
 
 
@@ -97,8 +98,15 @@ const DashboardPage : FC = () => {
     }
 
     async function getCategoriesFromServer() {
+
         let result = await (await axios.get(`/category/get-all?PageNumber=1&PageSize=20`)).data;
+
+        if(result.status === 200) {
+            toast.success("Promise resolved")
+        }
+
         dispatch(setCategories(result.data))
+
     }
 
     useEffect(()=> {
@@ -111,9 +119,9 @@ const DashboardPage : FC = () => {
 
     useEffect(() => categoriesChange(), [categorySelected])
 
-    if (productItem !== null) {
-        dispatch(invalidateProductItem()) //when the component gets rendered i remove the productItem from redux state
-    }
+    // if (productItem !== null) {
+    //     dispatch(invalidateProductItem()) //when the component gets rendered i remove the productItem from redux state
+    // }
 
     // #endregion
 

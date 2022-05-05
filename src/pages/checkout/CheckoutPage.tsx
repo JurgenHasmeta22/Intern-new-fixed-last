@@ -7,12 +7,23 @@ import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon
 import useGetUser from "../../main/hooks/useGetUser"
 import { RootState } from "../../main/store/redux/rootState"
 import { IBankAccount, IBankAccountName, invalidateCart } from "../../main/store/stores/cart/cart.store"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./CheckoutPage.css"
+import { useEffect, useRef } from "react"
 // #endregion
 
 
 export default function CheckoutPage() {
 
+    
+    const notify = () => toast.success("Payment was succesfully done!");
+    const timerRef = useRef(null);
+
+    useEffect(() => {
+        // Clear the interval when the component unmounts
+        return () => clearTimeout(timerRef.current); 
+    }, [])
 
     // #region "React hooks"
     const user = useGetUser()
@@ -56,14 +67,21 @@ export default function CheckoutPage() {
             // console.log(result)
 
             if (result.status === 200) {
+
                 dispatch(invalidateCart())
-                alert("Your transaction was successfull")
+
+                notify()
+
+                timerRef.current = setTimeout(() => {
+                    navigate("/dashboard")}, 3000
+                )
+
             }
 
         }
 
         else {
-            alert("You cant proceed for a payment with no total value to pay")
+            toast("You cant proceed for a payment with no total value to pay", { autoClose: 5000 } )
         }
 
     } 

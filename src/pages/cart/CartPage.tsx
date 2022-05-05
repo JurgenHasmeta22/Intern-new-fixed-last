@@ -20,6 +20,9 @@ import {
     setBankAccounts,
     setSelectedBankAccountNameOnly
 } from "../../main/store/stores/cart/cart.store"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // #endregion
 
 
@@ -49,12 +52,13 @@ export default function BagPage() {
 
         let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
 
+        // if (result.status === 200) {
+        //     toast.success("Bank accounts are loaded from server")
+        // }
+
         dispatch(setBankAccounts(result.data))
         dispatch(setSelectedBankAccount(result.data[0]))
         dispatch(setSelectedBankAccountNameOnly(result.data[0].name))
-        
-        // console.log(result.data[0].name)
-        // dispatch(setSelectedBankAccountName({name: result.data[0].name})
 
     }
 
@@ -218,7 +222,7 @@ export default function BagPage() {
                             }
 
                             else {
-                                alert("You need to have products in the cart to proceed to checkout, or your bank account is not sufficent to proceed to payment")
+                                toast("You need to have products in the cart to proceed to checkout, or your bank account is not sufficent to proceed to payment", { autoClose: 5000 } )
                             }
 
                         }}>
