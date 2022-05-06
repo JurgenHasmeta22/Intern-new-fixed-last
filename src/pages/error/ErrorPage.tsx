@@ -12,6 +12,7 @@ export default function ErrorPage() {
 
             <div className="error">
                 <span>ERROR 404</span>
+                <span>This route doesnt exist</span>
             </div>
 
             <FooterCommon />

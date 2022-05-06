@@ -88,6 +88,7 @@ const DashboardPage : FC = () => {
 
 
     // #region "Products state and fetching etc with axios"
+    
     const products: TProduct[] = useSelector((state: RootState) => state.dashboard.products);
 
     //@ts-ignore
@@ -121,8 +122,6 @@ const DashboardPage : FC = () => {
     useEffect(()=> {
         getProductsFromServer()
     }, [])
-
-    // useEffect(() => categoriesChange(), [categorySelected])
 
     // #endregion
 

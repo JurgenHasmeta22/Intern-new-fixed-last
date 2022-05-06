@@ -23,7 +23,7 @@ export default function CheckoutPage() {
 
     useEffect(() => {
         // Clear the interval when the component unmounts
-        return () => clearTimeout(timerRef.current); 
+        return () => clearTimeout(timerRef.current); // uses useRef hook to do this and clear timeout in a one way
     }, [])
     // #endregion
 
@@ -37,9 +37,11 @@ export default function CheckoutPage() {
 
     // #region "Redux state"
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
+
     const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
     const selectedBankAccountName: IBankAccountName = useSelector((state: RootState) => state.cart.selectedBankAccountName)
     const selectedBankAccountNameOnly: string = useSelector((state: RootState) => state.cart.selectedBankAccountNameOnly)
+    
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts)
     // #endregion
 
@@ -67,6 +69,7 @@ export default function CheckoutPage() {
         if (totalValue !== 0 && selectedBankAccount?.balance > totalValue) {
 
             let result = await axios.post(`/banktransaction`, transactionData);
+
             // console.log(result)
 
             if (result.status === 200) {
@@ -84,7 +87,7 @@ export default function CheckoutPage() {
         }
 
         else {
-            toast("You cant proceed for a payment with no total value to pay", { autoClose: 5000 } )
+            toast("You cant proceed for a payment with no total value to pay", { autoClose: 3000 } )
         }
 
     } 

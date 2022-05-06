@@ -1,7 +1,6 @@
 // #region "Importing stuff"
 import { FC, useEffect } from "react"
-// import { useStore } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./LoginPage.css"
 import { useDispatch, useSelector } from "react-redux"
 import {RootState} from '../../main/store/redux/rootState'
@@ -14,7 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -24,7 +23,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from "react-toastify";
 // #endregion
 
+
 const LoginPage : FC = ()=>{
+
 
     // #region "Using react hooks and other stuff"
     const navigate = useNavigate()
@@ -32,10 +33,12 @@ const LoginPage : FC = ()=>{
     const dispatch = useDispatch();
     // #endregion
 
+
     // #region "Redux state"
     const userName = useSelector((state: RootState) => state.login.userName);
     const password = useSelector((state: RootState) => state.login.password);
     // #endregion
+
 
     // #region "Event listeners"
     function handleSubmit(e: any) {
@@ -48,14 +51,15 @@ const LoginPage : FC = ()=>{
         }
 
         dispatch(onLogin(data))
-        // navigate("../dashboard");
 
     }
     // #endregion
 
+    
     // #region "Helpers and other stuff"
     const notify = () => toast.success("Welcome")
     // #endregion
+
 
     return (
 
@@ -223,7 +227,11 @@ const LoginPage : FC = ()=>{
 
                                 <Grid item>
                                     
-                                    <Link href="" variant="body2" onClick={() => { navigate("/register") }}>
+                                    {/* <Link to="/register" variant="body2" onClick={() => { navigate("/register") }}>
+                                        {"Don't have an account? Sign Up"}
+                                    </Link> */}
+
+                                    <Link to="/register">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
 

@@ -29,9 +29,11 @@ import ICategory from "../../main/interfaces/ICategory";
 // #endregion
 
 
+// #region "Global Variables"
 const randColour = ["green", "red", "blue", "yellow"][
     Math.floor(Math.random() * 4)
 ];
+// #endregion
 
 
 export default function ProductItemPage() {

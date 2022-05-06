@@ -39,7 +39,9 @@ export default function BagPage() {
     const [selectedQuantityCart, setSelectedQuantityCart] = useState<any>("")
 
     const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
+    
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
+
     const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
     const selectedBankAccountName: IBankAccountName | null = useSelector((state: RootState) => state.cart.selectedBankAccountName);
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
@@ -51,10 +53,6 @@ export default function BagPage() {
     async function getBankAccountsFromServer() {
 
         let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
-
-        // if (result.status === 200) {
-        //     toast.success("Bank accounts are loaded from server")
-        // }
 
         dispatch(setBankAccounts(result.data))
         dispatch(setSelectedBankAccount(result.data[0]))
@@ -68,6 +66,7 @@ export default function BagPage() {
     // #endregion
 
 
+    // #region "Events listeners and other helpers functions"
     function handleOnChangeSelect(e:any) {
         dispatch(setSelectedBankAccountName(e.target.value))
     }
@@ -78,11 +77,14 @@ export default function BagPage() {
         const bankAccountFinal = newBankAccounts.find(bankAccount => bankAccount.name === e.target.value )
 
         // console.log(bankAccountFinal)
+        
         dispatch(setSelectedBankAccount(bankAccountFinal))
         dispatch(setSelectedBankAccountNameOnly(bankAccountFinal.name))
 
     }
-    
+    // #endregion
+
+
     return (
 
         <>
@@ -157,9 +159,8 @@ export default function BagPage() {
                                                 defaultValue = {productCart.quantity}
 
                                                 onChange={function(e) {
-                                                    // setSelectedQuantityCart(e.target.value)
                                                     dispatch(changeProductQuantity({ productId: productCart.product.id, quantity: Number(e.target.value) }))
-                                                }}>
+                                            }}>
                                                     
                                                 <option value="1">
                                                     1
@@ -184,15 +185,14 @@ export default function BagPage() {
                                             </select>
 
                                         </p>
-                                        
-                                        {/* <p>Item total: {totalValue}</p> */}
-                                        
+                                                                                
                                         <button 
                                             onClick={function () {
                                                 navigate(`/products/${productCart.product.id}`)
                                             }}>
 
                                             Go to product
+
                                         </button>
                                         
                                         <button onClick={function () {
@@ -227,14 +227,16 @@ export default function BagPage() {
 
                         }}>
 
-                                Proceed to payment
+                            Proceed to payment
 
                         </button>
 
                         <button className="button-clear-cart" onClick={function () {
                             dispatch(invalidateCart())
                         }}>
+
                             Clear Cart
+
                         </button>
 
                         <Link to = "/createBankAccount" className="create-account-bank">

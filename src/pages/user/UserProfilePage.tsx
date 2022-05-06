@@ -87,7 +87,6 @@ export default function UserProfilePage({validateUser}:any) {
         
     }
 
-    // if (selectedBankProfile !==)
     useEffect(()=> {
         getTransactionsFromServer()
     }, [selectedBankProfile, params.pageNumber])
@@ -268,11 +267,11 @@ export default function UserProfilePage({validateUser}:any) {
 
                         <li className= {params.tab === "favoriteMovies" ? "clicked": "videos-tab"} onClick={() => {
                             navigate(`/profile/${user?.username}/transactions`)
-                        }}>User transactions</li>
+                        }}>User Transactions</li>
                         
                         <li className= {params.tab === "aboutUs" ? "clicked": "about-tab"} onClick={() => {
                             navigate(`/profile/${user?.username}/about`)
-                        }}>User information</li>
+                        }}>User Information</li>
 
                     </ul>
 
@@ -314,10 +313,10 @@ export default function UserProfilePage({validateUser}:any) {
                                     </select>
 
                                     <label htmlFor="filter-by-type">
-                                        <h3>Bank balance: {selectedBankProfile?.balance}</h3>
+                                        <h3>Bank Balance: {selectedBankProfile?.balance}</h3>
                                     </label>
 
-                                    <h3>Currency description: {findingCurrenciesNamesForBankAccounts(selectedBankProfile?.currencyId)}</h3>         
+                                    <h3>Currency Description: {findingCurrenciesNamesForBankAccounts(selectedBankProfile?.currencyId)}</h3>         
                     
                                 </form>
 
@@ -361,6 +360,7 @@ export default function UserProfilePage({validateUser}:any) {
                                     />
 
                                     <div className='data-grid-wrapper'>
+
                                         <DataGrid
                                             rows={rows}
                                             columns={columns}
@@ -370,6 +370,7 @@ export default function UserProfilePage({validateUser}:any) {
                                             disableSelectionOnClick
                                             className='data-grid'
                                         />
+                                        
                                     </div>
 
                                 </div>

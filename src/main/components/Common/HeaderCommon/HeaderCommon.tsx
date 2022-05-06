@@ -48,13 +48,14 @@ export default function HeaderCommon(this: any) {
 
 
     // #region "Helpers functions"
+
     function filterProductsBasedOnCategory(categoryIdArray: number) {
 
         const newProducts: TProduct[] | undefined = [...products]
         
         const finalProducts = newProducts.filter(product => product.categoryId === categoryIdArray)
         
-        // console.log(finalProducts)
+        console.log(finalProducts)
 
         //@ts-ignore
         dispatch(setProductsFiltered(finalProducts))
@@ -70,7 +71,7 @@ export default function HeaderCommon(this: any) {
         //@ts-ignore
         const categoryFound = newCategories.find(category => category.description === categorySelected)
         
-        // console.log(categoryFound)
+        console.log(categoryFound)
 
         filterProductsBasedOnCategory(categoryFound?.id)
 
@@ -87,6 +88,7 @@ export default function HeaderCommon(this: any) {
         return number
 
     }
+
     // #endregion
 
 
