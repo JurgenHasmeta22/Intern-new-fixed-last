@@ -79,7 +79,7 @@ export default function CheckoutPage() {
                 notify()
 
                 timerRef.current = setTimeout(() => {
-                    navigate("/dashboard")}, 3000
+                    navigate("/dashboard")}, 2000
                 )
 
             }
@@ -87,7 +87,7 @@ export default function CheckoutPage() {
         }
 
         else {
-            toast("You cant proceed for a payment with no total value to pay", { autoClose: 3000 } )
+            toast("You cant proceed for a payment with no total value to pay", { autoClose: 2000 } )
         }
 
     } 

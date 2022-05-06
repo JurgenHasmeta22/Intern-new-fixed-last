@@ -251,6 +251,7 @@ const DashboardPage : FC = () => {
                                     <span><strong>Product Name: </strong> {product?.name}</span>
                                     <p><strong>Product Short Desc: </strong> {product?.shortDescription}</p>
                                     <span><strong>Product Price: </strong> {product?.price}$</span>
+
                                     <span><strong>Product Category Id: </strong> {product?.categoryId}</span>
                                     <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product?.categoryId)}</span>        
 

@@ -153,13 +153,13 @@ export default function CreateBankAccountPage() {
                         }}
                     >
 
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5"  sx={{ mb: 3 }} >
                             Create Bank Account
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={(e: any) => {
                             handleSubmitForm(e) 
-                        }} sx={{ mt: 3 }}>
+                        }} sx={{ mt: 6 }}>
 
                             <Grid container spacing={4}>
 
@@ -234,7 +234,7 @@ export default function CreateBankAccountPage() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 5, mb: 5 }}
                             >
 
                                 Create Bank Account
