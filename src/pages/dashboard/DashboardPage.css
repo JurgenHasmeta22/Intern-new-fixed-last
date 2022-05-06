@@ -16,6 +16,17 @@
   cursor: pointer;
 }
 
+.products-void {
+  display: grid;
+  place-items: center;
+  height: 500px;
+}
+
+.products-void span {
+  font-size: 18px;
+  font-weight: 800;
+}
+
 .dashboard-wrapper {
   grid-area: dashboard-wrapper;
   display: grid;

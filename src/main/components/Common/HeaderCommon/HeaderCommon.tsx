@@ -42,7 +42,6 @@ export default function HeaderCommon(this: any) {
     const categories: ICategory[] | undefined = useSelector((state: RootState) => state.dashboard.categories);
     
     const products: TProduct[] | undefined = useSelector((state: RootState) => state.dashboard.products);
-    
     const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
 
 	//@ts-ignore
@@ -76,9 +75,7 @@ export default function HeaderCommon(this: any) {
         //@ts-ignore
         const categoryFound = newCategories.find(category => category.description === categoryDesc)
         
-        console.log(categoryFound)
-
-        // filterProductsBasedOnCategory(categoryFound?.id)
+        // console.log(categoryFound)
 
         dispatch(setCategorySelected(categoryDesc))
         dispatch(setCategorySelectedObject(categoryFound))
@@ -97,6 +94,14 @@ export default function HeaderCommon(this: any) {
 
     }
 
+	function handleResetSearch(e: any) {
+
+		if (searchTerm === "") {
+			dispatch(setCategorySelected("Default"))
+		}
+
+	}
+
     // #endregion
 
 
@@ -108,12 +113,20 @@ export default function HeaderCommon(this: any) {
                     
             <div className="header-group-1">
 
-                <Link to="/dashboard">Bank System</Link>
+                <Link to="/dashboard" onClick={() => {
+					dispatch(setCategorySelected("Default"))
+					dispatch(setSearchTerm(""))
+				}}>Bank System</Link>
                 
                 <ul className="list-nav">
 
-                    <div className="div-inside-li">                            
+                    <div className="div-inside-li" onClick={() => {
+						dispatch(setCategorySelected("Default"))
+						dispatch(setSearchTerm(""))
+					}}>
+
                         <NavLink to = "/dashboard" className="special-uppercase" >Home</NavLink>
+
                     </div>
 
                     <div className="div-inside-li-special">
@@ -124,8 +137,9 @@ export default function HeaderCommon(this: any) {
 
                             <img src="/assets/logos/list_blu.png" alt="" />
                             
-                            <li className="special-uppercase" onClick={function (e) {
-                            }}>Categories</li>
+                            <li className="special-uppercase">
+								Categories
+							</li>
 
                         </div>
               
@@ -134,12 +148,10 @@ export default function HeaderCommon(this: any) {
                             <ul>
                                 
                               <li onClick={() => {
-                                  //@ts-ignore
-                                //   dispatch(setProductsFiltered(products))
-                                  dispatch(setCategorySelected("Default"))
+                                	dispatch(setCategorySelected("Default"))
                               }}>
 
-                                  Show All
+                            		Show All
 
                               </li>
 
@@ -172,12 +184,20 @@ export default function HeaderCommon(this: any) {
             <div className="header-group-2">
                 
                 <form className="button-search" onSubmit={function (e) {
+					e.preventDefault()
                 }}>
 
                     <input type="search" name="searchMovie"  placeholder="Search for Products..." aria-label="Search through site content" 
-                        onChange={function (e) {
+                        
+						onChange={function (e) {
 							dispatch(setSearchTerm(e.target.value)) 
-                    }}/>
+						}}
+
+						onKeyDown={function (e: any) {
+							handleResetSearch(e)
+						}}
+
+					/>
 
                     <button type="submit">
                         <i className="fa fa-search"></i>
@@ -204,12 +224,13 @@ export default function HeaderCommon(this: any) {
                         <li
                           className="dropbtn"
                           onClick={function () {
-                              navigate(`/profile/${user?.username}`)
+                            navigate(`/profile/${user?.username}`)
                           }}
                         >
 
                           <img src={"https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"} />
-                          {user.username}
+                          
+						  {user.username}
                           
                         </li>
               

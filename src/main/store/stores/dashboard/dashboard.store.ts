@@ -20,7 +20,7 @@ const initialState: IDashboard = {
   //@ts-ignore
   currencies: [],
 
-  categorySelected: "",
+  categorySelected: "Default",
 
   //@ts-ignore
   searchTerm: "",

@@ -17,7 +17,8 @@ import {
     invalidateProductItem,
     setCategories,
     invalidateCategories,
-    setProductsFiltered
+    setProductsFiltered,
+    setCategorySelectedObject
 } from "../../main/store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../main/interfaces/TProduct";
@@ -78,7 +79,11 @@ const DashboardPage : FC = () => {
     const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
 
     //@ts-ignore
+    const categorySelectedObject: string = useSelector((state: RootState) => state.dashboard.categorySelectedObject);
+
+    //@ts-ignore
     const searchTerm: string = useSelector((state: RootState) => state.dashboard.searchTerm);
+
     // #endregion
 
 
@@ -172,52 +177,46 @@ const DashboardPage : FC = () => {
     // #endregion
 
 
-    let globalItemsToDisplay: any = []
-
     // #region "Filtering products"
     function filteringProductsBySearchTerm(itemsToDisplay: any) {
-
         return itemsToDisplay.filter(function (item: any) {
             return item.name.toLowerCase().includes(searchTerm.toLowerCase())
         })
-
     }
 
-    function filteringProductsByCategory() {
-
+    function filteringProductsByCategory(itemsToDisplayParam: any) {
         //@ts-ignore
-        return globalItemsToDisplay.filter(item => item.categoryId === categorySelected )
-
+        return itemsToDisplayParam.filter(item => item.categoryId === categorySelectedObject?.id )
     }
 
     function showItems() {
 
         let initialFilteredItems = JSON.parse(JSON.stringify(products))
-        let itemsToDisplay = []
         let itemToDisplayFiltered = []
 
-        // #region 'Conditionals for ---search select--- based on cagetories with searched item'
         if (searchTerm === '' && categorySelected === 'Default') {
             return initialFilteredItems
         }
     
         else if (searchTerm === '' && categorySelected !== 'Default') {
-            itemsToDisplay = products
-            globalItemsToDisplay = itemsToDisplay
-    
-            // itemToDisplayFiltered = getOffersFromState()
+            
+            itemToDisplayFiltered = filteringProductsByCategory(initialFilteredItems)
+            console.log(itemToDisplayFiltered)
+
+            return itemToDisplayFiltered
+
         }
 
-        else if (searchTerm !== '' && categorySelected === ('Default' || categorySelected !== "Default")) {
-            itemsToDisplay = products
-            globalItemsToDisplay = itemsToDisplay
-            itemToDisplayFiltered = filteringProductsBySearchTerm(itemsToDisplay)
-    
-            // itemToDisplayFiltered = getOffersFromState()
+        else if ( searchTerm !== '' && ( categorySelected === 'Default' || categorySelected !== "Default" ) ) {
+            
+            itemToDisplayFiltered = filteringProductsBySearchTerm(initialFilteredItems)
+            console.log(itemToDisplayFiltered)
+
+            return itemToDisplayFiltered
+
         }
 
     }
-
     // #endregion
 
 
@@ -229,35 +228,49 @@ const DashboardPage : FC = () => {
                 
             <div className="dashboard-wrapper">
 
-                <div className='products-wrapper'>
+                { showItems().length !== 0 ? 
+                
+                    (
 
-                    { 
-                    
-                        // @ts-ignore
-                        productsFiltered.map(product => 
+                        <div className='products-wrapper'>
 
-                            <div className="product-item" key = {product?.id} onClick={() => {
-                                navigate(`/products/${product?.id}`)
-                            }}>
-
-                                <img
-                                    src={`data:image/jpeg;base64,${product?.base64Image}`}
-                                    alt={`${product?.name}`}
-                                />
-
-                                <span><strong>Product Name: </strong> {product?.name}</span>
-                                <p><strong>Product Short Desc: </strong> {product?.shortDescription}</p>
-                                <span><strong>Product Price: </strong> {product?.price}$</span>
-                                <span><strong>Product Category Id: </strong> {product?.categoryId}</span>
-                                <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product?.categoryId)}</span>        
-
-                            </div>
+                        { 
                         
-                        )
+                            // @ts-ignore
+                            showItems().map(product => 
 
-                    }
+                                <div className="product-item" key = {product?.id} onClick={() => {
+                                    navigate(`/products/${product?.id}`)
+                                }}>
 
-                </div>
+                                    <img
+                                        src={`data:image/jpeg;base64,${product?.base64Image}`}
+                                        alt={`${product?.name}`}
+                                    />
+
+                                    <span><strong>Product Name: </strong> {product?.name}</span>
+                                    <p><strong>Product Short Desc: </strong> {product?.shortDescription}</p>
+                                    <span><strong>Product Price: </strong> {product?.price}$</span>
+                                    <span><strong>Product Category Id: </strong> {product?.categoryId}</span>
+                                    <span><strong>Product Category name: </strong> {findingCategoriesNamesForProducts(product?.categoryId)}</span>        
+
+                                </div>
+                            
+                            )
+
+                        }
+
+                        </div>
+
+                    ): (
+
+                        <div className="products-void">
+                            <span>No Products to show</span>
+                        </div>
+
+                    )
+
+                }
 
             </div>
                 
