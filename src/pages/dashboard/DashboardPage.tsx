@@ -201,8 +201,7 @@ const DashboardPage : FC = () => {
         else if (searchTerm === '' && categorySelected !== 'Default') {
             
             itemToDisplayFiltered = filteringProductsByCategory(initialFilteredItems)
-            console.log(itemToDisplayFiltered)
-
+            // console.log(itemToDisplayFiltered)
             return itemToDisplayFiltered
 
         }
@@ -210,8 +209,7 @@ const DashboardPage : FC = () => {
         else if ( searchTerm !== '' && ( categorySelected === 'Default' || categorySelected !== "Default" ) ) {
             
             itemToDisplayFiltered = filteringProductsBySearchTerm(initialFilteredItems)
-            console.log(itemToDisplayFiltered)
-
+            // console.log(itemToDisplayFiltered)
             return itemToDisplayFiltered
 
         }

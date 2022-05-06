@@ -18,6 +18,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Modal } from "@mui/material";
+
+import Demo from "../../main/components/Modals/testModal"
+import DemoNested from "../../main/components/Modals/nestedTestModal"
 // #endregion
 
 export default function CreateBankAccountPage() {
@@ -248,6 +252,11 @@ export default function CreateBankAccountPage() {
                 </Container>
 
             </ThemeProvider>
+
+            <div className="modal-caller-wrapper">
+                <Demo />
+                <DemoNested />
+            </div>
 
             <FooterCommon />
 

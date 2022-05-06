@@ -4,6 +4,7 @@
     grid-template: 
     "header" 100px
     "bank-wrapper" 0.9fr
+    "modal-caller" 100px
     "footer" 0.1fr;
     grid-gap: 20px;
 }
@@ -16,6 +17,10 @@
     padding-top: 100px;
     padding-bottom: 100px;
     height: 700px;
+}
+
+.modal-caller-wrapper {
+    grid-area: modal-caller;
 }
 
 .form-wrapper {
