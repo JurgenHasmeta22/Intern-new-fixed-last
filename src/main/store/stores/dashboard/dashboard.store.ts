@@ -20,7 +20,13 @@ const initialState: IDashboard = {
   //@ts-ignore
   currencies: [],
 
-  categorySelected: ""
+  categorySelected: "",
+
+  //@ts-ignore
+  searchTerm: "",
+
+  //@ts-ignore
+  categorySelectedObject: null
   
 }
 
@@ -88,6 +94,26 @@ const dashboardStore = createSlice({
     invalidateProductsFiltered(state) {
       //@ts-ignore
       state.productsFiltered = action.payload
+    },
+
+    setSearchTerm(state, action: PayloadAction<string>) {
+      //@ts-ignore
+      state.searchTerm = action.payload
+    },
+
+    invalidateSearchTerm(state) {
+      //@ts-ignore
+      state.searchTerm = ""
+    },
+
+    setCategorySelectedObject(state, action: PayloadAction<ICategory>) {
+      //@ts-ignore
+      state.categorySelectedObject = action.payload
+    },
+
+    invalidateCategorySelectedObject(state) {
+      //@ts-ignore
+      state.categorySelectedObject = null
     }
 
   }
@@ -108,5 +134,9 @@ export const {
   setCategorySelected,
   invalidateCategorySelected,
   setProductsFiltered,
-  invalidateProductsFiltered
+  invalidateProductsFiltered,
+  setSearchTerm,
+  invalidateSearchTerm,
+  setCategorySelectedObject,
+  invalidateCategorySelectedObject
 } = dashboardStore.actions;

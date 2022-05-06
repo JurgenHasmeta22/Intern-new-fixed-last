@@ -11,10 +11,14 @@ import { navigateTo } from "../../../store/stores/navigation/navigation.store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-    setCategorySelected,
-    invalidateCategorySelected,
-    setProducts,
-    setProductsFiltered
+  setCategorySelected,
+  invalidateCategorySelected,
+  setProducts,
+  setProductsFiltered,
+	setSearchTerm,
+	invalidateSearchTerm,
+  setCategorySelectedObject,
+  invalidateCategorySelectedObject
 } from "../../../store/stores/dashboard/dashboard.store"
 
 import { TProduct } from "../../../interfaces/TProduct";
@@ -41,6 +45,9 @@ export default function HeaderCommon(this: any) {
     
     const productsInTheCart: ICartProduct[] = useSelector((state: RootState) => state.cart.products);
 
+	//@ts-ignore
+    const searchTerm: string = useSelector((state: RootState) => state.dashboard.searchTerm);
+
     // @ts-ignore
     const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
 
@@ -49,31 +56,32 @@ export default function HeaderCommon(this: any) {
 
     // #region "Helpers functions"
 
-    function filterProductsBasedOnCategory(categoryIdArray: number) {
+    // function filterProductsBasedOnCategory(categoryIdArray: number) {
 
-        const newProducts: TProduct[] | undefined = [...products]
+    //     const newProducts: TProduct[] | undefined = [...products]
         
-        const finalProducts = newProducts.filter(product => product.categoryId === categoryIdArray)
+    //     const finalProducts = newProducts.filter(product => product.categoryId === categoryIdArray)
         
-        console.log(finalProducts)
+    //     console.log(finalProducts)
 
-        //@ts-ignore
-        dispatch(setProductsFiltered(finalProducts))
+    //     //@ts-ignore
+    //     dispatch(setProductsFiltered(finalProducts))
 
-    }
+    // }
     
-    function handleCategoryRender(category: any) {
-
-        dispatch(setCategorySelected(category?.description))
+    function handleCategoryRender(categoryDesc: any) {
 
         const newCategories: any = [...categories]
 
         //@ts-ignore
-        const categoryFound = newCategories.find(category => category.description === categorySelected)
+        const categoryFound = newCategories.find(category => category.description === categoryDesc)
         
         console.log(categoryFound)
 
-        filterProductsBasedOnCategory(categoryFound?.id)
+        // filterProductsBasedOnCategory(categoryFound?.id)
+
+        dispatch(setCategorySelected(categoryDesc))
+        dispatch(setCategorySelectedObject(categoryFound))
 
     }
 
@@ -127,9 +135,12 @@ export default function HeaderCommon(this: any) {
                                 
                               <li onClick={() => {
                                   //@ts-ignore
-                                  dispatch(setProductsFiltered(products))
+                                //   dispatch(setProductsFiltered(products))
+                                  dispatch(setCategorySelected("Default"))
                               }}>
+
                                   Show All
+
                               </li>
 
                               {
@@ -138,9 +149,7 @@ export default function HeaderCommon(this: any) {
                                 categories.map(category => 
 
                                     <li className = "special-list-drop" key={category?.id} onClick={function (e: any) {
-                                        // e.stopPropagation()
-                                        // dispatch(setCategorySelected(category?.description))
-                                        handleCategoryRender(category)
+                                        handleCategoryRender(category.description)
                                     }}>{category.description}</li>
 
                                 )
@@ -166,7 +175,8 @@ export default function HeaderCommon(this: any) {
                 }}>
 
                     <input type="search" name="searchMovie"  placeholder="Search for Products..." aria-label="Search through site content" 
-                        onChange={function (e) {  
+                        onChange={function (e) {
+							dispatch(setSearchTerm(e.target.value)) 
                     }}/>
 
                     <button type="submit">

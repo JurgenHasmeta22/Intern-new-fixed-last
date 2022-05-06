@@ -41,14 +41,6 @@ const DashboardPage : FC = () => {
     let pagesVisited = pageNumber * itemsPerPage
     let pageCount
 
-    // if (params.query) {
-    //     pageCount = Math.ceil(moviesCountSearch / itemsPerPage)
-    // }
-
-    // else {
-    //     pageCount = Math.ceil(moviesCount?.count / itemsPerPage)
-    // }
-
     function handleChangingPageNumber(selected:any) {
         setPageNumber(selected)
     }
@@ -84,6 +76,9 @@ const DashboardPage : FC = () => {
 
     //@ts-ignore
     const categorySelected: string = useSelector((state: RootState) => state.dashboard.categorySelected);
+
+    //@ts-ignore
+    const searchTerm: string = useSelector((state: RootState) => state.dashboard.searchTerm);
     // #endregion
 
 
@@ -173,6 +168,55 @@ const DashboardPage : FC = () => {
     //     }
 
     // }
+
+    // #endregion
+
+
+    let globalItemsToDisplay: any = []
+
+    // #region "Filtering products"
+    function filteringProductsBySearchTerm(itemsToDisplay: any) {
+
+        return itemsToDisplay.filter(function (item: any) {
+            return item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        })
+
+    }
+
+    function filteringProductsByCategory() {
+
+        //@ts-ignore
+        return globalItemsToDisplay.filter(item => item.categoryId === categorySelected )
+
+    }
+
+    function showItems() {
+
+        let initialFilteredItems = JSON.parse(JSON.stringify(products))
+        let itemsToDisplay = []
+        let itemToDisplayFiltered = []
+
+        // #region 'Conditionals for ---search select--- based on cagetories with searched item'
+        if (searchTerm === '' && categorySelected === 'Default') {
+            return initialFilteredItems
+        }
+    
+        else if (searchTerm === '' && categorySelected !== 'Default') {
+            itemsToDisplay = products
+            globalItemsToDisplay = itemsToDisplay
+    
+            // itemToDisplayFiltered = getOffersFromState()
+        }
+
+        else if (searchTerm !== '' && categorySelected === ('Default' || categorySelected !== "Default")) {
+            itemsToDisplay = products
+            globalItemsToDisplay = itemsToDisplay
+            itemToDisplayFiltered = filteringProductsBySearchTerm(itemsToDisplay)
+    
+            // itemToDisplayFiltered = getOffersFromState()
+        }
+
+    }
 
     // #endregion
 
