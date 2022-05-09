@@ -43,17 +43,20 @@ export default function CreateBankAccountPage() {
         const bankData = {
             "code": code,
             "name": name,
-            "currencyId": currencyId,
-            "balance": balance
+            "currencyId": Number(currencyId),
+            "balance": Number(balance)
         }
+
+        console.log(bankData)
 
         if (code === "" || name === "" || currencyId === "" || balance === "") {
             toast.warn("You cant proceed without completing all the required fields")
         }
 
         else {
-            
             let result = await axios.post(`/bankaccount`, bankData);
+
+            // console.log(result)
 
             if (result.status === 200) {
                 toast.success("Bank account was created successfully!")
@@ -210,7 +213,7 @@ export default function CreateBankAccountPage() {
                                         name="currencyBank"
                                         autoComplete="currency"
                                         onChange={(e: any) => {
-                                            setCurrencyId(e.target.id)
+                                            setCurrencyId(e.target.value)
                                         }}
                                     />
 

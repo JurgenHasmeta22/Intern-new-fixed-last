@@ -37,12 +37,14 @@ export default function CheckoutPage() {
 
     // #region "Redux state"
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
+    const totalValueConverted: number = useSelector((state: RootState) => state.cart.totalValueConverted);
 
     const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
     const selectedBankAccountName: IBankAccountName = useSelector((state: RootState) => state.cart.selectedBankAccountName)
     const selectedBankAccountNameOnly: string = useSelector((state: RootState) => state.cart.selectedBankAccountNameOnly)
     
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts)
+    const selectedCurrencyDescNameOnly: string = useSelector((state: RootState) => state.cart.selectedCurrencyDescNameOnly)
     // #endregion
 
 
@@ -59,7 +61,7 @@ export default function CheckoutPage() {
         const transactionData = {
             bankAccountId: bankAccountFinal?.id,
             action: 1,
-            amount: totalValue,
+            amount: totalValueConverted,
             description: `Payment of ${user?.username}`,
             isActive: true
         }
@@ -126,7 +128,11 @@ export default function CheckoutPage() {
                         </label>
 
                         <label>
-                            <span>Total payment amount is: {totalValue} </span>
+                            <span>Total payment amount is: {totalValueConverted} </span>
+                        </label>
+
+                        <label>
+                            <span>Currency Selected to pay:  {selectedCurrencyDescNameOnly} </span>
                         </label>
 
                         <label>

@@ -73,9 +73,11 @@ export default function BagPage() {
 
         let result = await (await axios.get(`/bankaccount/get-all?PageNumber=1&PageSize=10`)).data;
 
+        console.log(result)
+        
         dispatch(setBankAccounts(result.data))
         dispatch(setSelectedBankAccount(result.data[0]))
-        dispatch(setSelectedBankAccountNameOnly(result.data[0].name))
+        dispatch(setSelectedBankAccountNameOnly(result.data[0]?.name))
 
     }
 
@@ -213,7 +215,9 @@ export default function BagPage() {
                                 currenciesNew?.length === 0 ? (
                                     <option value="Default">No Currency to choose</option>
                                 ): (
-                 
+                                    
+                                    // <option value="Default">Default</option>
+
                                     //@ts-ignore
                                     currenciesNew.map(currency =>  
                                         <option key={currency.id} value={currency.description}>{currency.description}</option>
