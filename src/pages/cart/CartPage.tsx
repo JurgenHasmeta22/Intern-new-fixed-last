@@ -18,11 +18,22 @@ import {
     setSelectedBankAccount,
     setSelectedBankAccountName,
     setBankAccounts,
-    setSelectedBankAccountNameOnly
+    setSelectedBankAccountNameOnly,
+    setSelectedCurrencyDesc,
+    invalidateSelectedCurrencyDescNameOnly,
+    setSelectedCurrencyDescNameOnly,
+    invalidateSelectedCurrencyDesc,
+    setSelectedCurrencyDescName,
+    setTotalValueConverted
 } from "../../main/store/stores/cart/cart.store"
+
+import {
+    setCurrencies
+} from "../../main/store/stores/dashboard/dashboard.store"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ICurrency from "../../main/interfaces/ICurrency"
 // #endregion
 
 
@@ -42,10 +53,18 @@ export default function BagPage() {
     
     const totalValue: number = useSelector((state: RootState) => state.cart.totalValue);
 
+    const currencies: ICurrency[] = useSelector((state: RootState) => state.dashboard.currencies);
+    
     const selectedBankAccount: IBankAccount = useSelector((state: RootState) => state.cart.selectedBankAccount);
     const selectedBankAccountName: IBankAccountName | null = useSelector((state: RootState) => state.cart.selectedBankAccountName);
+    
     const bankAccounts: IBankAccount[] = useSelector((state: RootState) => state.cart.bankAccounts);
     const selectedBankAccountNameOnly: string = useSelector((state: RootState) => state.cart.selectedBankAccountNameOnly);
+    
+    const selectedCurrencyDescNameOnly: string = useSelector((state: RootState) => state.cart.selectedCurrencyDescNameOnly);
+
+
+    const [selectedBankAccountCurrencyNameOnly, setSelectedBankAccountCurrencyNameOnly] = useState<string>("")
     // #endregion
 
 
@@ -62,6 +81,20 @@ export default function BagPage() {
 
     useEffect(()=> {
         getBankAccountsFromServer()
+    }, [])
+
+    async function getCurrenciesFromServer() {
+
+        let result = await (await axios.get(`/currency/get-all?PageNumber=1&PageSize=10`)).data;
+
+        dispatch(setCurrencies(result.data))
+        dispatch(setSelectedCurrencyDesc(result.data[0]))
+        dispatch(setSelectedCurrencyDescNameOnly(result.data[0].description))
+
+    }
+
+    useEffect(()=> {
+        getCurrenciesFromServer()
     }, [])
     // #endregion
 
@@ -82,7 +115,73 @@ export default function BagPage() {
         dispatch(setSelectedBankAccountNameOnly(bankAccountFinal.name))
 
     }
-    // #endregion
+
+    function handleOnChangeSelectCurrency(e:any) {
+        dispatch(setSelectedCurrencyDescName(e.target.value))
+    }
+
+    function handleOnChangeCurrency(e: any) {
+
+        const newCurrencies = [...currencies]
+        const currencyFinal = newCurrencies.find(currency => currency.description === e.target.value )
+
+        // console.log(currencyFinal)
+        
+        dispatch(setSelectedCurrencyDesc(currencyFinal))
+        dispatch(setSelectedCurrencyDescNameOnly(currencyFinal.description))
+        // dispatch(setTotalValueConverted(convertingMoneyToOther()))
+
+    }
+
+    function findingCurrenciesNamesForBankAccounts(currencyId: number) {
+        const bankAccountCurrencyName: any = currencies?.find(currency => currency?.id === currencyId)
+        return bankAccountCurrencyName?.description
+    }
+
+    function convertingMoneyToOther() {
+
+        const baseCurrency: any = setSelectedCurrencyDescNameOnly
+        const baseMoney: any = totalValue
+
+        const exchangeRateEuroToDollar: any = 1.055
+        const exchangeRateEuroToPaund: any = 0.85
+        const exchangeRateEuroToFranga: any = 1.04
+        const exchangeRateEuroToBitcoin: any = 0.000032
+
+        const finalMoneyEuroToDollar = baseMoney * exchangeRateEuroToDollar
+        const finalMoneyEuroToPaund = baseMoney * exchangeRateEuroToPaund
+        const finalMoneyEuroToFranga = baseMoney * exchangeRateEuroToFranga
+        const finalMoneyEuroToBitcoin = baseMoney * exchangeRateEuroToBitcoin
+
+        if (selectedCurrencyDescNameOnly === "Bitcoin") {
+            dispatch(setTotalValueConverted(finalMoneyEuroToBitcoin))
+            return finalMoneyEuroToBitcoin
+        }
+
+        else if (selectedCurrencyDescNameOnly === "franga") {
+            dispatch(setTotalValueConverted(finalMoneyEuroToFranga))
+            return finalMoneyEuroToFranga
+        }
+
+        else if (selectedCurrencyDescNameOnly === "Pound") {
+            dispatch(setTotalValueConverted(finalMoneyEuroToPaund))
+            return finalMoneyEuroToPaund
+        }
+
+        else if (selectedCurrencyDescNameOnly === "dollar") {
+            dispatch(setTotalValueConverted(finalMoneyEuroToDollar))
+            return finalMoneyEuroToDollar
+        }
+
+        else if (selectedCurrencyDescNameOnly === "PRILL") {
+            dispatch(setTotalValueConverted(finalMoneyEuroToBitcoin))
+            return finalMoneyEuroToBitcoin
+        }
+
+    }
+
+    const currenciesNew: ICurrency[] = currencies?.filter( currency => currency?.description !== findingCurrenciesNamesForBankAccounts(selectedBankAccount?.currencyId) )
+    // #endregion 
 
 
     return (
@@ -96,6 +195,37 @@ export default function BagPage() {
                 <section className="basket-container">
 
                     <form id="filter-by-sort" className="form-cart">
+
+                        <label htmlFor="filter-by-type">
+                            <h3>Choose transaction currency(currency wich wich will be used): </h3>
+                        </label>
+                        
+                        <select name="filter-by-sort" id="filter-by-sort" 
+                        onChange={function (e: any) {
+                            handleOnChangeSelectCurrency(e)
+                            handleOnChangeCurrency(e)
+                            // convertingMoneyToOther()
+                            // dispatch(setTotalValueConverted(convertingMoneyToOther()))
+                        }}>
+                            
+                            {
+                            
+                                currenciesNew?.length === 0 ? (
+                                    <option value="Default">No Currency to choose</option>
+                                ): (
+                 
+                                    //@ts-ignore
+                                    currenciesNew.map(currency =>  
+                                        <option key={currency.id} value={currency.description}>{currency.description}</option>
+                                    )
+
+                                )
+
+                            }
+
+                        </select>
+
+                        <span>The converted total value: {convertingMoneyToOther()} {selectedCurrencyDescNameOnly} </span>
 
                         <label htmlFor="filter-by-type">
                             <h3>Choose bank account: </h3>
@@ -242,6 +372,8 @@ export default function BagPage() {
                         <Link to = "/createBankAccount" className="create-account-bank">
                             Create a bank account
                         </Link>
+
+                        <h3>Currency Description: { findingCurrenciesNamesForBankAccounts(selectedBankAccount?.currencyId) }</h3>         
 
                     </div>
 

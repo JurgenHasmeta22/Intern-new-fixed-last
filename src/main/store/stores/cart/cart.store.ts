@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ICurrency from '../../../interfaces/ICurrency';
 import { TProduct } from '../../../interfaces/TProduct';
 
 export interface IBankAccount {
@@ -19,7 +20,11 @@ export interface ICartStore {
     selectedBankAccount: IBankAccount | null
     selectedBankAccountName: IBankAccountName | null
     selectedBankAccountNameOnly: string
-    bankAccounts: IBankAccount[]
+    bankAccounts: IBankAccount[],
+    selectedCurrencyDesc: ICurrency | null,
+    selectedCurrencyDescNameOnly: string,
+    selectedCurrencyDescName: ICurrencyName | null,
+    totalValueConverted: number
 }
 
 export interface ICartProduct {
@@ -36,6 +41,10 @@ export interface IBankAccountName {
     name: string
 }
 
+export interface ICurrencyName {
+    name: string
+}
+
 const calculateTotalPrice = (storeState: ICartStore) => {
     let totPrice = 0;
     storeState.products.forEach((x) => totPrice += x.product.price * x.quantity);
@@ -48,7 +57,11 @@ const initValue : ICartStore = {
     selectedBankAccount: null, 
     selectedBankAccountName: null, 
     selectedBankAccountNameOnly: "",
-    bankAccounts: [] 
+    bankAccounts: [],
+    selectedCurrencyDesc: null,
+    selectedCurrencyDescNameOnly: "",
+    selectedCurrencyDescName: null,
+    totalValueConverted: 0
 }
 
 const cartStore = createSlice({
@@ -104,6 +117,30 @@ const cartStore = createSlice({
 
     setBankAccounts(state, action:PayloadAction<IBankAccount[]>) {
         state.bankAccounts = action.payload
+    },
+
+    setSelectedCurrencyDescNameOnly(state, action:PayloadAction<string>) {
+        state.selectedCurrencyDescNameOnly = action.payload
+    },
+
+    invalidateSelectedCurrencyDescNameOnly(state) {
+        state.selectedCurrencyDescNameOnly = ""
+    },
+
+    setSelectedCurrencyDesc(state, action:PayloadAction<ICurrency>) {
+        state.selectedCurrencyDesc = action.payload
+    },
+
+    invalidateSelectedCurrencyDesc(state) {
+        state.selectedCurrencyDesc = null
+    },
+
+    setSelectedCurrencyDescName(state, action:PayloadAction<ICurrencyName>) {
+        state.selectedCurrencyDescName = action.payload
+    },
+
+    setTotalValueConverted(state, action:PayloadAction<number>) {
+        state.totalValueConverted = action. payload
     }
 
   }
@@ -120,5 +157,11 @@ export const {
     setSelectedBankAccount, 
     setSelectedBankAccountName,
     setBankAccounts,
-    setSelectedBankAccountNameOnly
+    setSelectedBankAccountNameOnly,
+    setSelectedCurrencyDesc,
+    invalidateSelectedCurrencyDesc,
+    setSelectedCurrencyDescNameOnly,
+    invalidateSelectedCurrencyDescNameOnly,
+    setSelectedCurrencyDescName,
+    setTotalValueConverted
 } = cartStore.actions;
