@@ -1,29 +1,25 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IProfile from "../../../interfaces/IProfile"
-import ITransaction from '../../../interfaces/ITransaction';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import IProfile from "../../../interfaces/IProfile";
+import ITransaction from "../../../interfaces/ITransaction";
 
 const initialState: IProfile = {
-    transactions: []
-}
+  transactions: [],
+};
 
 const profileStore = createSlice({
-
-  name: 'profile',
+  name: "profile",
 
   initialState,
-  
-  reducers: {
 
+  reducers: {
     setTransactions(state, action: PayloadAction<ITransaction[]>) {
-        state.transactions = action.payload
+      state.transactions = action.payload;
     },
 
     invalidateTransactions(state) {
-      state.transactions = []
-    }
-
-  }
-  
+      state.transactions = [];
+    },
+  },
 });
 
 export default profileStore;

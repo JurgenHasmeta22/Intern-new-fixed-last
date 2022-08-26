@@ -1,30 +1,30 @@
 .bankAccount-page-wrapper {
-    height: auto;
-    display: grid;
-    grid-template: 
+  height: auto;
+  display: grid;
+  grid-template:
     "header" 100px
     "bank-wrapper" 0.9fr
     "modal-caller" 100px
     "footer" 0.1fr;
-    grid-gap: 20px;
+  grid-gap: 20px;
 }
 
 .bankAccount-wrapper {
-    grid-area: bank-wrapper;
-    display: grid;
-    grid-template-rows: 1fr;
-    place-items: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    height: 700px;
+  grid-area: bank-wrapper;
+  display: grid;
+  grid-template-rows: 1fr;
+  place-items: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  height: 700px;
 }
 
 .modal-caller-wrapper {
-    grid-area: modal-caller;
+  grid-area: modal-caller;
 }
 
 .form-wrapper {
-    display: grid;
-    grid-template-rows: repeat(4, 0.25fr);
-    grid-gap: 20px;
+  display: grid;
+  grid-template-rows: repeat(4, 0.25fr);
+  grid-gap: 20px;
 }

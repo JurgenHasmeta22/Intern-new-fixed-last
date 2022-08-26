@@ -15,6 +15,7 @@
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "encrypt-storage": "^2.2.6",
+    "prettier": "^2.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.20.2",
@@ -31,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pretty": "prettier --write \"src/**/*.{css,js,json,tsx,ts,jsx}"
   },
   "eslintConfig": {
     "extends": [
