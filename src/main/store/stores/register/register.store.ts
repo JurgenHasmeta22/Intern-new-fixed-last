@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IRegister from "../../../interfaces/IRegister";
 import IUser from "../../../interfaces/IUser";
 
 const initialState: IUser = {
@@ -21,27 +20,21 @@ const registerStore = createSlice({
     setFirstName(state, action: PayloadAction<string>) {
       state.firstName = action.payload;
     },
-
     setLastName(state, action: PayloadAction<string>) {
       state.lastName = action.payload;
     },
-
     setUserNameRegister(state, action: PayloadAction<string>) {
       state.username = action.payload;
     },
-
     setPasswordRegister(state, action: PayloadAction<string>) {
       state.password = action.payload;
     },
-
     setPhoneNumber(state, action: PayloadAction<string>) {
       state.phone = action.payload;
     },
-
     setEmailRegister(state, action: PayloadAction<string>) {
       state.email = action.payload;
     },
-
     setBirthDate(state, action: PayloadAction<string>) {
       state.birthdate = action.payload;
     },

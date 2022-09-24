@@ -1,42 +1,57 @@
-// #region "Importing stuff"
-import { FC, useCallback, useEffect, useState } from "react";
-import onLogout from "../../main/store/stores/user/login.store.on-logout";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../main/store/redux/rootState";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HeaderCommon from "../../main/components/Common/HeaderCommon/HeaderCommon";
 import FooterCommon from "../../main/components/Common/FooterCommon/FooterCommon";
 import axios from "axios";
 import "../dashboard/DashboardPage.css";
 import ReactLoading from "react-loading";
-
 import {
   setProducts,
-  invalidateProducts,
-  setProductItem,
-  invalidateProductItem,
   setCategories,
-  invalidateCategories,
   setProductsFiltered,
-  setCategorySelectedObject,
 } from "../../main/store/stores/dashboard/dashboard.store";
-
 import { TProduct } from "../../main/interfaces/TProduct";
 import { toast } from "react-toastify";
-// #endregion
 
 const DashboardPage: FC = () => {
-  // #region "React hooks"
   const params = useParams();
-  // #endregion
-
-  // #region "Pagination in frontend not implemented"
-
   const [pageNumber, setPageNumber] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-
   let pagesVisited = pageNumber * itemsPerPage;
   let pageCount;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //@ts-ignore
+  const categories: ICategory[] | undefined = useSelector(
+    (state: RootState) => state.dashboard.categories
+  );
+  //@ts-ignore
+  const categorySelected: string = useSelector(
+    (state: RootState) => state.dashboard.categorySelected
+  );
+  //@ts-ignore
+  const categorySelectedObject: string = useSelector(
+    (state: RootState) => state.dashboard.categorySelectedObject
+  );
+  //@ts-ignore
+  const searchTerm: string = useSelector(
+    (state: RootState) => state.dashboard.searchTerm
+  );
+  //@ts-ignore
+  const products: TProduct[] = useSelector(
+    (state: RootState) => state.dashboard.products
+  );
+  //@ts-ignore
+  const productsFiltered: TProduct[] = useSelector(
+    (state: RootState) => state.dashboard.productsFiltered
+  );
+  //@ts-ignore
+  const productItem: TProduct = useSelector(
+    (state: RootState) => state.dashboard.productItem
+  );
 
   function handleChangingPageNumber(selected: any) {
     setPageNumber(selected);
@@ -55,50 +70,6 @@ const DashboardPage: FC = () => {
     }
   };
 
-  // #endregion
-
-  // #region "Using react hooks and other stuff"
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  //@ts-ignore
-  const categories: ICategory[] | undefined = useSelector(
-    (state: RootState) => state.dashboard.categories
-  );
-
-  //@ts-ignore
-  const categorySelected: string = useSelector(
-    (state: RootState) => state.dashboard.categorySelected
-  );
-
-  //@ts-ignore
-  const categorySelectedObject: string = useSelector(
-    (state: RootState) => state.dashboard.categorySelectedObject
-  );
-
-  //@ts-ignore
-  const searchTerm: string = useSelector(
-    (state: RootState) => state.dashboard.searchTerm
-  );
-
-  // #endregion
-
-  // #region "Products state and fetching etc with axios"
-
-  const products: TProduct[] = useSelector(
-    (state: RootState) => state.dashboard.products
-  );
-
-  //@ts-ignore
-  const productsFiltered: TProduct[] = useSelector(
-    (state: RootState) => state.dashboard.productsFiltered
-  );
-
-  //@ts-ignore
-  const productItem: TProduct = useSelector(
-    (state: RootState) => state.dashboard.productItem
-  );
-
   async function getProductsFromServer() {
     let result = await (
       await axios.get(`/product/get-all?PageNumber=1&PageSize=10`)
@@ -111,41 +82,11 @@ const DashboardPage: FC = () => {
     let result = await (
       await axios.get(`/category/get-all?PageNumber=1&PageSize=20`)
     ).data;
-
     if (result.status === 200) {
       toast.success("Promise resolved");
     }
-
     dispatch(setCategories(result.data));
   }
-
-  useEffect(() => {
-    getCategoriesFromServer();
-  }, []);
-
-  useEffect(() => {
-    getProductsFromServer();
-  }, []);
-
-  // #endregion
-
-  // #region "Checking if the user came from server"
-  if (products[0]?.name === undefined) {
-    return (
-      <div className="loading-wrapper">
-        <ReactLoading
-          type={"spin"}
-          color={"#000"}
-          height={200}
-          width={100}
-          className="loading"
-        />
-      </div>
-    );
-  }
-  // #endregion
-
-  // #region "Helpers functions and filtering functions"
 
   function findingCategoriesNamesForProducts(categoryId: number) {
     const productCategoryName: any = categories?.find(
@@ -154,35 +95,6 @@ const DashboardPage: FC = () => {
     return productCategoryName.description;
   }
 
-  // function filterProductsBasedOnCategory(categoryIdArray: number) {
-
-  //     const newProducts: TProduct[] | undefined = [...products]
-
-  //     newProducts.filter(product => product.categoryId === categoryIdArray)
-
-  //     //@ts-ignore
-  //     dispatch(setProductsFiltered(newProducts))
-
-  // }
-
-  // function categoriesChange() {
-
-  //     if (categorySelected !== "") {
-
-  //         const newCategories: any = [...categories]
-
-  //         //@ts-ignore
-  //         newCategories.find(category => category.description === categorySelected )
-
-  //         filterProductsBasedOnCategory(newCategories.id)
-
-  //     }
-
-  // }
-
-  // #endregion
-
-  // #region "Filtering products"
   function filteringProductsBySearchTerm(itemsToDisplay: any) {
     return itemsToDisplay.filter(function (item: any) {
       return item.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -200,12 +112,10 @@ const DashboardPage: FC = () => {
   function showItems() {
     let initialFilteredItems = JSON.parse(JSON.stringify(products));
     let itemToDisplayFiltered = [];
-
     if (searchTerm === "" && categorySelected === "Default") {
       return initialFilteredItems;
     } else if (searchTerm === "" && categorySelected !== "Default") {
       itemToDisplayFiltered = filteringProductsByCategory(initialFilteredItems);
-      // console.log(itemToDisplayFiltered)
       return itemToDisplayFiltered;
     } else if (
       searchTerm !== "" &&
@@ -213,16 +123,31 @@ const DashboardPage: FC = () => {
     ) {
       itemToDisplayFiltered =
         filteringProductsBySearchTerm(initialFilteredItems);
-      // console.log(itemToDisplayFiltered)
       return itemToDisplayFiltered;
     }
   }
-  // #endregion
 
+  useEffect(() => {
+    getProductsFromServer();
+    getCategoriesFromServer();
+  }, []);
+
+  if (products[0]?.name === undefined) {
+    return (
+      <div className="loading-wrapper">
+        <ReactLoading
+          type={"spin"}
+          color={"#000"}
+          height={200}
+          width={100}
+          className="loading"
+        />
+      </div>
+    );
+  }
   return (
     <div className="dashboard-main-wrapper">
       <HeaderCommon />
-
       <div className="dashboard-wrapper">
         {showItems().length !== 0 ? (
           <div className="products-wrapper">
@@ -240,7 +165,6 @@ const DashboardPage: FC = () => {
                     src={`data:image/jpeg;base64,${product?.base64Image}`}
                     alt={`${product?.name}`}
                   />
-
                   <span>
                     <strong>Product Name: </strong> {product?.name}
                   </span>
@@ -251,7 +175,6 @@ const DashboardPage: FC = () => {
                   <span>
                     <strong>Product Price: </strong> {product?.price}$
                   </span>
-
                   <span>
                     <strong>Product Category Id: </strong> {product?.categoryId}
                   </span>
@@ -269,7 +192,6 @@ const DashboardPage: FC = () => {
           </div>
         )}
       </div>
-
       <FooterCommon />
     </div>
   );

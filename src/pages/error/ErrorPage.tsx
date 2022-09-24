@@ -6,12 +6,10 @@ export default function ErrorPage() {
   return (
     <>
       <HeaderCommon />
-
       <div className="error">
         <span>ERROR 404</span>
         <span>This route doesnt exist</span>
       </div>
-
       <FooterCommon />
     </>
   );

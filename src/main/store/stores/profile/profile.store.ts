@@ -8,14 +8,11 @@ const initialState: IProfile = {
 
 const profileStore = createSlice({
   name: "profile",
-
   initialState,
-
   reducers: {
     setTransactions(state, action: PayloadAction<ITransaction[]>) {
       state.transactions = action.payload;
     },
-
     invalidateTransactions(state) {
       state.transactions = [];
     },

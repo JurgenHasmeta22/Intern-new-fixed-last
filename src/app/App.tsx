@@ -1,8 +1,6 @@
-// #region "Importing stuff"
 import AppNavigate from "./AppNavigate";
 import PrivateRoute from "./private-route";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import TestPage from "../pages/test";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import LoginPage from "../pages/login/LoginPage";
 import RegisterPage from "../pages/register/RegisterPage";
@@ -12,20 +10,15 @@ import CartPage from "../pages/cart/CartPage";
 import UserProfilePage from "../pages/user/UserProfilePage";
 import CheckoutPage from "../pages/checkout/CheckoutPage";
 import CreateBankAccountPage from "../pages/bankAccount/CreateBankAccountPage";
-
 import "../app/App.css";
-// #endregion
 
 const App = () => {
   return (
     <BrowserRouter>
       <AppNavigate />
-
       <Routes>
         <Route index element={<Navigate replace to="/login" />} />
-
         <Route path="*" element={<ErrorPage />} />
-
         <Route
           path="/dashboard"
           element={
@@ -34,7 +27,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/login"
           element={
@@ -51,7 +43,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/products/:id"
           element={
@@ -60,7 +51,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/:username/cart"
           element={
@@ -69,7 +59,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/profile/:username"
           element={
@@ -86,13 +75,11 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
         <Route path="/profile/:username/:tab" element={<UserProfilePage />} />
         <Route
           path="/profile/:username/:tab/page/:pageNumber"
           element={<UserProfilePage />}
         />
-
         <Route
           path="/createBankAccount"
           element={
